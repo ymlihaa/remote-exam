@@ -9,7 +9,7 @@ import Optik from "./components/Optik";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import UpdateProfile from "./components/UpdateProfile";
-
+import Header from "./components/Header";
 import "./components/teacher-login.css";
 
 // import Signup from "./Signup";
@@ -19,34 +19,31 @@ import "./components/teacher-login.css";
 
 function Main() {
   return (
-    <div
-      className=" d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
-        <Router>
-          <AuthProvider>
-            <Switch>
-              <PrivateRoute exact path="/">
-                <Dashboard />
-              </PrivateRoute>
-              <PrivateRoute path="/update-profile">
-                <UpdateProfile />
-              </PrivateRoute>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/teacher">
-                <TeacherLogin />
-              </Route>
-              <Route path="/exam">
-                <App />
-              </Route>
-            </Switch>
-          </AuthProvider>
-        </Router>
-      </div>
-    </div>
+    <>
+      <Router>
+        <AuthProvider>
+          <Header />
+
+          <Switch>
+            <PrivateRoute exact path="/">
+              <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute path="/update-profile">
+              <UpdateProfile />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/teacher">
+              <TeacherLogin />
+            </Route>
+            <Route path="/exam">
+              <App />
+            </Route>
+          </Switch>
+        </AuthProvider>
+      </Router>
+    </>
   );
 }
 

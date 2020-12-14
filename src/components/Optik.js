@@ -59,6 +59,7 @@ class Optik extends Component {
     })
       .then(function (response) {
         console.log(response.data);
+        history.push("/");
       })
       .catch(function (error) {
         console.log(error);

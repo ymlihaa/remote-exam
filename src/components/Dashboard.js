@@ -14,36 +14,20 @@ export default function Dashboard() {
     }
   }, []);
 
-  async function handleLogout() {
-    setError("");
-    try {
-      await logout();
-      history.push("/login");
-    } catch {
-      setError("Failed to log out");
-    }
-  }
-
   return (
     <>
-      <div className="card">
-        <div className="card-body">
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser && currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link>
+      <div className="container d-flex  align-items-center justify-content-center">
+        <div className="card">
+          <div className="card-body">
+            <h2 className="text-center mb-4">Profile</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <strong>Email:</strong> {currentUser && currentUser.email}
+            <Link to="/update-profile" className="btn">
+              Update Profile
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="w-100 text-center mt-2">
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="btn btn-primary"
-        >
-          Log Out
-        </button>
+        <div className="w-100 text-center mt-2"></div>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
-import Alerts from "./ExamAlert";
 import Optik from "./Optik";
+import ExamAlert from "./ExamAlert";
 import AppContext from "../context/app-context";
 
 import Join from "./Join";
@@ -13,6 +13,7 @@ export default function App() {
     name: "",
     surName: "",
     studentNumber: "",
+    ExamID: "",
     isTrue: false,
   };
 
@@ -23,7 +24,8 @@ export default function App() {
           name: action.name,
           surname: action.surname,
           studentNumber: action.studentNumber,
-          isTrue: action.isTrue,
+          ExamID: action.ExamID,
+          isTrue: action.onAuth,
         };
       case "mounting":
         return { state: action.user };
@@ -52,11 +54,11 @@ export default function App() {
     boxShadow: " 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
     maxWidth: "600px",
   };
-  const element = <Alerts alertType={alertType} />;
+  const element = <ExamAlert alertType={alertType} />;
 
   return (
     // <div style={Appwrapper} className="mx-auto p-2">
-    <AppContext.Provider value={{ setAlertType, dispatch }}>
+    <AppContext.Provider value={{ dispatch }}>
       <div className="container d-flex flex-column align-items-center justify-content-center">
         {element !== null && element}
         {/* <div className="w-100 mx-auto" style={cardshadow}>

@@ -83,7 +83,19 @@ export default function TeacherLogin({ dispatch }) {
                 />
               </div>
             </div>
-            <a>Forgot password</a>
+            <div className="d-flex flex-col justify-content-between">
+              <span>
+                <a>Forgot password</a>
+              </span>
+              <span>
+                <Link to="/exam">Sınav Girişi</Link>
+              </span>
+            </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
             <input
               disabled={loading}
               type="submit"

@@ -3,7 +3,7 @@ import React, { useEffect, useContext, useRef, useState } from "react";
 import AppContext from "../context/app-context";
 import { useAuth } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
-import bg from "./exam03.svg";
+import bg from "./studentlogin.svg";
 import avatar from "./stars.svg";
 
 export default function Join({ dispatch }) {
@@ -28,14 +28,13 @@ export default function Join({ dispatch }) {
     console.log(examIDRef.current.value);
     try {
       await thisContext.dispatch({
+        type: "setState",
         name: usernameRef.current.value,
         surname: surnameRef.current.value,
         studentNumber: studentNumberRef.current.value,
         ExamID: examIDRef.current.value,
+        onAuth: true,
       });
-      setError("");
-      setLoading(true);
-      history.push("/");
     } catch {
       setError("İşlem Gerçekleştirilemedi .");
     }
@@ -71,8 +70,9 @@ export default function Join({ dispatch }) {
                 <i className="fas fa-user"></i>
               </div>
               <div className="div">
-                <h5>Email</h5>
+                <h5>Name</h5>
                 <input
+                  tabIndex={1}
                   ref={usernameRef}
                   type="text"
                   className="input"
@@ -83,12 +83,13 @@ export default function Join({ dispatch }) {
             </div>
             <div className="input-div pass">
               <div className="i">
-                <i className="fas fa-lock"></i>
+                <i className="fas fa-user"></i>
               </div>
 
               <div className="div">
                 <h5>Last Name</h5>
                 <input
+                  tabIndex={2}
                   ref={surnameRef}
                   type="text"
                   className="input"
@@ -100,11 +101,12 @@ export default function Join({ dispatch }) {
 
             <div className="input-div pass">
               <div className="i">
-                <i className="fas fa-lock"></i>
+                <i class="fas fa-sort-numeric-up-alt"></i>{" "}
               </div>
               <div className="div">
                 <h5>Student Number</h5>
                 <input
+                  tabIndex={3}
                   ref={studentNumberRef}
                   type="text"
                   className="input"
@@ -121,6 +123,7 @@ export default function Join({ dispatch }) {
               <div className="div">
                 <h5>Exam ID</h5>
                 <input
+                  tabIndex={4}
                   ref={examIDRef}
                   type="text"
                   className="input"
@@ -130,10 +133,11 @@ export default function Join({ dispatch }) {
               </div>
             </div>
 
-            <span>
+            <span tabIndex={6}>
               <Link to="/teacher">Öğretmen Girişi</Link>
             </span>
             <input
+              tabIndex={5}
               disabled={loading}
               type="submit"
               value="Join"
