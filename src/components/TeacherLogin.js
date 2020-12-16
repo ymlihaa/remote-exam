@@ -3,6 +3,8 @@ import React, { useState, useRef, useContext } from "react";
 import AppContext from "../context/app-context";
 import { useAuth } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
+import "./teacher-login.css";
+
 import bg from "./exam03.svg";
 import avatar from "./stars.svg";
 
@@ -45,10 +47,10 @@ export default function TeacherLogin({ dispatch }) {
 
   return (
     <>
-      <img src={bg} alt="bg" className="bg" />
-      <div className="bg">{/* <img src={} /> */}</div>
-      <div className="container">
-        <div className="left"></div>
+      <div className="teacher-container">
+        <div className="left">
+          <img src={bg} alt="bg" className="bg" />
+        </div>
         <div className="login-content">
           <form onSubmit={handleSubmit}>
             <img src={avatar} alt="avatar" />
@@ -100,7 +102,7 @@ export default function TeacherLogin({ dispatch }) {
               disabled={loading}
               type="submit"
               value="Login"
-              className="btn"
+              className="teacher-btn"
             />
           </form>
         </div>

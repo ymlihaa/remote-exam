@@ -53,12 +53,13 @@ class Optik extends Component {
   }
 
   finishExam() {
-    Axios.post("http://localhost:3000/finish", {
+    Axios.post("http://localhost:5000/finish", {
       user: this.props.userInfo,
       result: Object.values(this.state.result),
     })
       .then(function (response) {
         console.log(response.data);
+        this.props.setAlertType("finishAlert");
         history.push("/");
       })
       .catch(function (error) {

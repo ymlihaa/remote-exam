@@ -20,7 +20,10 @@ function Header() {
   return (
     <nav
       className="navbar navbar-light "
-      style={{ backgroundColor: "#32be8f" }}
+      style={{
+        backgroundColor: "#32be8f",
+        boxShadow: "0 0 30px rgba(0, 0, 0, 0.18)",
+      }}
     >
       <span
         style={{ color: "white", fontWeight: "bold" }}

@@ -4,9 +4,9 @@ import React from "react";
 const ExamAlert = (props) => {
   if (props.alertType == "upperAlert") {
     return (
-      <div className="alert alert-warning w-100 mt-3 text-center" role="alert">
+      <div className="alert alert-warning w-50 mt-3 text-center" role="alert">
         Bu testi bitirdiniz .{" "}
-        <a href="#" className="alert-link">
+        <a href="#" className="alert-link text-center">
           Buradan bir sonraki derse geçebilirsiniz.
         </a>
         Başarılar...
@@ -14,9 +14,9 @@ const ExamAlert = (props) => {
     );
   } else if (props.alertType == "lowerAlert") {
     return (
-      <div className="alert alert-warning w-100 mt-3 text-center" role="alert">
+      <div className="alert alert-warning w-50 mt-3 text-center" role="alert">
         Daha fazla geriye gidemezsiniz .{" "}
-        <a href="#" className="alert-link">
+        <a href="#" className="alert-link text-center">
           Zaten İlk sorudasınız.
         </a>
         Başarılar...

@@ -59,7 +59,7 @@ export default function Join({ dispatch }) {
     <>
       <img src={bg} alt="bg" className="bg" />
       <div className="bg">{/* <img src={} /> */}</div>
-      <div className="container">
+      <div className="teacher-container">
         <div className="left"></div>
         <div className="login-content">
           <form onSubmit={handleSubmit}>
@@ -141,7 +141,7 @@ export default function Join({ dispatch }) {
               disabled={loading}
               type="submit"
               value="Join"
-              className="btn"
+              className="teacher-btn"
             />
           </form>
         </div>

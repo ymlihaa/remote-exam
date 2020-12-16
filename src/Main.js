@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "./context/auth-context";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
@@ -10,7 +9,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import UpdateProfile from "./components/UpdateProfile";
 import Header from "./components/Header";
-import "./components/teacher-login.css";
 
 // import Signup from "./Signup";
 // import Dashboard from "./Dashboard";
