@@ -20,6 +20,7 @@ function Main() {
     <>
       <Router>
         <AuthProvider>
+          <Header />
           <Switch>
             <PrivateRoute exact path="/">
               <Dashboard />

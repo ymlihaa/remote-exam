@@ -3,6 +3,7 @@ import { useAuth } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import AddExam from "./AddExam";
 // import { Alert } from "react-bootstrap";
+import UpdateProfile from "./UpdateProfile";
 // import star from "./stars.svg";
 
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -18,7 +19,7 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const history = useHistory();
 
-  const [content, setContent] = useState(0);
+  const [content, setContent] = useState("addExam");
 
   const { SubMenu } = Menu;
   const { Header, Content, Sider } = Layout;
@@ -91,6 +92,8 @@ export default function Dashboard() {
         );
       case "deleteExam":
         return <div>hello delete Exam</div>;
+      case "updateProfile":
+        return <UpdateProfile />;
       default:
         return <div>no content</div>;
     }
@@ -124,7 +127,7 @@ export default function Dashboard() {
               icon={<UserOutlined />}
               title="Kullanıcı İşlemleri"
             >
-              <Menu.Item key="1">option1</Menu.Item>
+              <Menu.Item key="updateProfile">Profili Güncelle</Menu.Item>
               <Menu.Item key="2">option2</Menu.Item>
             </SubMenu>
             <SubMenu

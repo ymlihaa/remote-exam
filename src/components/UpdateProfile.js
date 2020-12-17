@@ -42,8 +42,14 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <div className="card">
-        <div className="card-body">
+      <div
+        className="card text-center"
+        style={{
+          minWidth: "350px",
+          boxShadow: " 0 0 30px rgba(0, 0, 0, 0.18)",
+        }}
+      >
+        <div className="card-body d-flex flex-column align-items-center justify-content-center">
           <h2 className="text-center mb-4">Update Profile</h2>
           {error && (
             <div className="alert alert-danger" role="alert">
@@ -91,11 +97,11 @@ export default function UpdateProfile() {
             >
               Update
             </button>
+            <div className="w-100 text-center mt-2">
+              <Link to="/">Cancel</Link>
+            </div>
           </form>
         </div>
-      </div>
-      <div className="w-100 text-center mt-2">
-        <Link to="/">Cancel</Link>
       </div>
     </>
   );

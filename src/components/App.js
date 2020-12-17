@@ -2,13 +2,14 @@ import React, { useEffect, useState, useReducer } from "react";
 import Optik from "./Optik";
 import ExamAlert from "./ExamAlert";
 import AppContext from "../context/app-context";
+import { useHistory } from "react-router-dom";
 
 import Join from "./Join";
 import { ContactSupportOutlined } from "@material-ui/icons";
 
 export default function App() {
   const [alertType, setAlert] = useState("");
-
+  const history = useHistory();
   const initialState = {
     name: "",
     surName: "",
@@ -40,6 +41,19 @@ export default function App() {
       dispatch({ type: "mounting", user: user });
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "user",
+      JSON.stringify([
+        state.name,
+        state.surname,
+        state.studentNumber,
+        state.isTrue,
+        state.ExamID,
+      ])
+    );
+  }, [state]);
 
   const setAlertType = (type) => {
     console.log("setAlertType :", type);
