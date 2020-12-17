@@ -53,7 +53,7 @@ class Optik extends Component {
   }
 
   finishExam() {
-    Axios.post("http://localhost:5000/finish", {
+    Axios.post("http://localhost:8099/finish", {
       user: this.props.userInfo,
       result: Object.values(this.state.result),
     })

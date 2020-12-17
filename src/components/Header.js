@@ -17,23 +17,51 @@ function Header() {
       setError("Failed to log out");
     }
   }
+
+  const flexCol = {
+    display: "flex",
+    alignItems: "flex-end",
+  };
+  const ul = {
+    dispay: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    justifyContent: "center",
+  };
+  const li = {
+    display: "inline-block",
+    color: "white",
+  };
+
+  const headerLi = (
+    <>
+      {" "}
+      <li style={li}>{currentUser && currentUser.email}</li>
+      <li style={li} onClick={handleLogout}>
+        <i class="fas fa-sign-out-alt"></i>
+      </li>
+    </>
+  );
   return (
-    <nav
-      className="navbar navbar-light "
+    <div
       style={{
+        width: "100%",
+        height: 80,
         backgroundColor: "#32be8f",
         boxShadow: "0 0 30px rgba(0, 0, 0, 0.18)",
       }}
     >
-      <span
-        style={{ color: "white", fontWeight: "bold" }}
-        className="navbar-brand mb-0 h1 text-center"
-      >
-        <Link to="/">Remote Trial Exam</Link>
-      </span>
-      {currentUser && <a onClick={handleLogout}>Logout</a>}
-    </nav>
+      <ul style={ul}>
+        <li style={li}>Logo</li>
+        {currentUser && headerLi}
+      </ul>
+    </div>
   );
 }
 
 export default Header;
+
+// style={{
+//     backgroundColor: "#32be8f",
+//     boxShadow: "0 0 30px rgba(0, 0, 0, 0.18)",
+//   }
