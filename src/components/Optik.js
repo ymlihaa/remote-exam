@@ -53,18 +53,20 @@ class Optik extends Component {
   }
 
   finishExam() {
-    Axios.post("http://localhost:8099/finish", {
-      user: this.props.userInfo,
-      result: Object.values(this.state.result),
-    })
-      .then(function (response) {
-        console.log(response.data);
-        this.props.setAlertType("finishAlert");
-        history.push("/");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // Axios.post("http://localhost:8099/finish", {
+    //   user: this.props.userInfo,
+    //   result: Object.values(this.state.result),
+    // })
+    //   .then(function (response) {
+    //     console.log(response.data);
+    //     this.props.setAlertType("finishAlert");
+    //     // localStorage.removeItem("user");
+    //     history.push("/");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    localStorage.removeItem("user");
   }
 
   nextPage() {

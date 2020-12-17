@@ -29,7 +29,13 @@ export default function App() {
           isTrue: action.onAuth,
         };
       case "mounting":
-        return { state: action.user };
+        return {
+          name: action.user.name,
+          surname: action.user.surname,
+          studentNumber: action.user.studentNumber,
+          ExamID: action.user.ExamID,
+          isTrue: action.user.isTrue,
+        };
     }
   }
 
@@ -37,23 +43,22 @@ export default function App() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
     if (user) {
       dispatch({ type: "mounting", user: user });
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify([
-        state.name,
-        state.surname,
-        state.studentNumber,
-        state.isTrue,
-        state.ExamID,
-      ])
-    );
-  }, [state]);
+    const user = {
+      name: state.name,
+      surname: state.surname,
+      studentNumber: state.studentNumber,
+      isTrue: state.isTrue,
+      examID: state.ExamID,
+    };
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [state.isTrue]);
 
   const setAlertType = (type) => {
     console.log("setAlertType :", type);
@@ -62,12 +67,6 @@ export default function App() {
     setAlert(type.toString());
   };
 
-  const cardshadow = {
-    background: " #fff",
-    borderRadius: " 2px",
-    boxShadow: " 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
-    maxWidth: "600px",
-  };
   const element = <ExamAlert alertType={alertType} />;
 
   return (
@@ -78,7 +77,7 @@ export default function App() {
         {/* <div className="w-100 mx-auto" style={cardshadow}>
           <h3 className="text-center">Türkçe</h3>
         </div> */}
-        {state.isTrue ? (
+        {localStorage.getItem("user") ? (
           <Optik userInfo={state} setAlertType={setAlertType} />
         ) : (
           <Join />
@@ -90,5 +89,5 @@ export default function App() {
 /**TODO:
  *
  * LOCAL STORAGE PROBLEMİNİ ÇÖZ
- *
+ * local storage diziye çevirdin diziden istrue değğerine ulaşığ sınava devam çözümü üret
  */
