@@ -14,7 +14,6 @@ class Optik extends Component {
     this.addClick = this.addClick.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.finishExam = this.finishExam.bind(this);
   }
 
   componentDidMount() {
@@ -52,22 +51,30 @@ class Optik extends Component {
     });
   }
 
-  finishExam() {
-    // Axios.post("http://localhost:8099/finish", {
-    //   user: this.props.userInfo,
-    //   result: Object.values(this.state.result),
-    // })
-    //   .then(function (response) {
-    //     console.log(response.data);
-    //     this.props.setAlertType("finishAlert");
-    //     // localStorage.removeItem("user");
-    //     history.push("/");
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    localStorage.removeItem("user");
-  }
+  finishExam = () => {
+    const data = this.props.userInfo;
+    const setType = () => {
+      return this.props.setAlertType("finishExam");
+    };
+
+    Axios.get("http://localhost:8099/finish-exam", {
+      name: data.name,
+      surname: data.surname,
+      studentNumber: data.studentNumber,
+      examID: data.examID,
+      result: Object.values(this.state.result),
+    })
+      .then(function (response) {
+        console.log(response);
+        // localStorage.removeItem("user");
+        setType();
+        // this.props.setAlertType("finishAlert");
+        // localStorage.removeItem("user");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   nextPage() {
     if (this.state.startIndex > 20) {
@@ -188,7 +195,7 @@ class Optik extends Component {
             Sonraki Sayfa
           </button>
           <button
-            onClick={this.finishExam}
+            onClick={this.finishExam.bind(this)}
             type="button"
             className="btn btn-danger  m-1"
           >

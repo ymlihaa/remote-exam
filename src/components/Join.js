@@ -27,14 +27,18 @@ export default function Join({ dispatch }) {
     console.log(studentNumberRef.current.value);
     console.log(examIDRef.current.value);
     try {
-      await thisContext.dispatch({
-        type: "setState",
-        name: usernameRef.current.value,
-        surname: surnameRef.current.value,
-        studentNumber: studentNumberRef.current.value,
-        ExamID: examIDRef.current.value,
-        onAuth: true,
-      });
+      await thisContext
+        .dispatch({
+          type: "setState",
+          name: usernameRef.current.value,
+          surname: surnameRef.current.value,
+          studentNumber: studentNumberRef.current.value,
+          ExamID: examIDRef.current.value,
+          onAuth: true,
+        })
+        .then(() => {
+          history.push("/exam");
+        });
     } catch {
       setError("İşlem Gerçekleştirilemedi .");
     }
@@ -78,6 +82,7 @@ export default function Join({ dispatch }) {
                   className="input"
                   onFocus={addcl}
                   onBlur={remcl}
+                  required
                 />
               </div>
             </div>
@@ -95,6 +100,7 @@ export default function Join({ dispatch }) {
                   className="input"
                   onFocus={addcl}
                   onBlur={remcl}
+                  required
                 />
               </div>
             </div>
@@ -112,6 +118,7 @@ export default function Join({ dispatch }) {
                   className="input"
                   onFocus={addcl}
                   onBlur={remcl}
+                  required
                 />
               </div>
             </div>
@@ -129,6 +136,7 @@ export default function Join({ dispatch }) {
                   className="input"
                   onFocus={addcl}
                   onBlur={remcl}
+                  required
                 />
               </div>
             </div>

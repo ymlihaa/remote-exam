@@ -3,7 +3,6 @@ import Optik from "./Optik";
 import ExamAlert from "./ExamAlert";
 import AppContext from "../context/app-context";
 import { useHistory } from "react-router-dom";
-
 import Join from "./Join";
 import { ContactSupportOutlined } from "@material-ui/icons";
 
@@ -77,7 +76,7 @@ export default function App() {
         {/* <div className="w-100 mx-auto" style={cardshadow}>
           <h3 className="text-center">Türkçe</h3>
         </div> */}
-        {localStorage.getItem("user") ? (
+        {state.isTrue ? (
           <Optik userInfo={state} setAlertType={setAlertType} />
         ) : (
           <Join />
