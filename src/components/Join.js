@@ -11,9 +11,7 @@ export default function Join({ dispatch }) {
   const surnameRef = useRef();
   const studentNumberRef = useRef();
   const examIDRef = useRef();
-
   const thisContext = useContext(AppContext);
-
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,24 +19,16 @@ export default function Join({ dispatch }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("click");
-    console.log(usernameRef.current.value);
-    console.log(surnameRef.current.value);
-    console.log(studentNumberRef.current.value);
-    console.log(examIDRef.current.value);
+
     try {
-      await thisContext
-        .dispatch({
-          type: "setState",
-          name: usernameRef.current.value,
-          surname: surnameRef.current.value,
-          studentNumber: studentNumberRef.current.value,
-          ExamID: examIDRef.current.value,
-          onAuth: true,
-        })
-        .then(() => {
-          history.push("/exam");
-        });
+      await thisContext.dispatch({
+        type: "setState",
+        name: usernameRef.current.value,
+        surname: surnameRef.current.value,
+        studentNumber: studentNumberRef.current.value,
+        ExamID: examIDRef.current.value,
+        onAuth: true,
+      });
     } catch {
       setError("İşlem Gerçekleştirilemedi .");
     }

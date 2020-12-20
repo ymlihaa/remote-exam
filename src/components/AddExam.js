@@ -35,7 +35,7 @@ export default function AddExam({ setDate }) {
   async function handleSubmit() {
     try {
       await axios
-        .post("http://localhost:8099/create-exam", {
+        .post("http://localhost:8099/exam/create", {
           startTime: startTime,
           endTime: endTime,
           answerKey: answerKey,

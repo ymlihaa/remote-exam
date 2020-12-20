@@ -61,7 +61,7 @@ export default function App() {
 
   const setAlertType = (type) => {
     console.log("setAlertType :", type);
-    console.log(document.documentElement.scrollTop);
+    // console.log(document.documentElement.scrollTop);
     document.documentElement.scrollTop = 0;
     setAlert(type.toString());
   };
@@ -69,13 +69,10 @@ export default function App() {
   const element = <ExamAlert alertType={alertType} />;
 
   return (
-    // <div style={Appwrapper} className="mx-auto p-2">
     <AppContext.Provider value={{ dispatch }}>
       <div className="container d-flex flex-column align-items-center justify-content-center">
         {element !== null && element}
-        {/* <div className="w-100 mx-auto" style={cardshadow}>
-          <h3 className="text-center">Türkçe</h3>
-        </div> */}
+
         {state.isTrue ? (
           <Optik userInfo={state} setAlertType={setAlertType} />
         ) : (
@@ -87,6 +84,6 @@ export default function App() {
 }
 /**TODO:
  *
- * LOCAL STORAGE PROBLEMİNİ ÇÖZ
- * local storage diziye çevirdin diziden istrue değğerine ulaşığ sınava devam çözümü üret
+ * X LOCAL STORAGE PROBLEMİNİ ÇÖZ
+ * X local storage diziye çevirdin diziden istrue değğerine ulaşığ sınava devam çözümü üret
  */

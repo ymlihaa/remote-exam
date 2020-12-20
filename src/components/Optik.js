@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { SignalCellularNullRounded } from "@material-ui/icons";
-import Axios from "axios";
+import { Hearing, SignalCellularNullRounded } from "@material-ui/icons";
+import axios from "axios";
 import React, { Component } from "react";
 import Button from "./Button";
 
@@ -10,10 +10,12 @@ class Optik extends Component {
     this.state = {
       result: [],
       startIndex: 0,
+      wait: false,
     };
     this.addClick = this.addClick.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
+    this.finishExam = this.finishExam.bind(this);
   }
 
   componentDidMount() {
@@ -51,30 +53,35 @@ class Optik extends Component {
     });
   }
 
-  finishExam = () => {
-    const data = this.props.userInfo;
-    const setType = () => {
-      return this.props.setAlertType("finishExam");
-    };
-
-    Axios.get("http://localhost:8099/finish-exam", {
-      name: data.name,
-      surname: data.surname,
-      studentNumber: data.studentNumber,
-      examID: data.examID,
-      result: Object.values(this.state.result),
-    })
-      .then(function (response) {
+  async finishExam() {
+    this.setState({
+      wait: true,
+    });
+    await axios
+      .post("http://localhost:8099/exam/finish", {
+        data: {
+          user: this.props.userInfo,
+          result: this.state.result
+            ? this.state.result
+            : localStorage.getItem("result"),
+        },
+      })
+      .then((response) => {
         console.log(response);
-        // localStorage.removeItem("user");
-        setType();
+        this.props.setAlertType;
+        this.setState({
+          wait: false,
+        });
         // this.props.setAlertType("finishAlert");
         // localStorage.removeItem("user");
       })
-      .catch(function (error) {
+      .catch((error) => {
+        this.setState({
+          wait: false,
+        });
         console.log(error);
       });
-  };
+  }
 
   nextPage() {
     if (this.state.startIndex > 20) {
@@ -107,7 +114,6 @@ class Optik extends Component {
   render() {
     // İşaretlenin her bir soruyu local storage den getiriyor
 
-    const { name, surname, studentNumber } = this.context;
     const localResultArr = {
       ...JSON.parse(localStorage.getItem("resultArr")),
     };
@@ -195,9 +201,10 @@ class Optik extends Component {
             Sonraki Sayfa
           </button>
           <button
-            onClick={this.finishExam.bind(this)}
+            onClick={this.finishExam}
             type="button"
             className="btn btn-danger  m-1"
+            disabled={this.state.wait}
           >
             Sınavı Bitir
           </button>

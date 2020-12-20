@@ -57,11 +57,11 @@ export default function RadioButtons(props) {
       <span style={{ fontWeight: "bold" }}>E</span>
 
       <Radio
-        checked={selectedValue === "f"}
+        checked={selectedValue === "e"}
         onChange={handleChange}
-        value="f"
+        value="e"
         name="radio-button-demo"
-        inputProps={{ "aria-label": "F" }}
+        inputProps={{ "aria-label": "E" }}
       />
     </div>
   );

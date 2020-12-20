@@ -1,14 +1,15 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+require("dotenv").config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCD0FbKZp5hLPd_N1DayJdfvrHw8QxxKSA",
-  authDomain: "remotetrialexam.firebaseapp.com",
-  projectId: "remotetrialexam",
-  storageBucket: "remotetrialexam.appspot.com",
-  messagingSenderId: "1082222567330",
-  appId: "1:1082222567330:web:ec964f7200848c57049cfb",
-  measurementId: "G-9CDLZGRD4N",
+  apiKey: process.env.FB_APIKEY,
+  authDomain: process.env.FB_AUTHDOMAIN,
+  projectId: process.env.FB_PROJECT_ID,
+  storageBucket: process.env.FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
+  appId: process.env.FB_APP_ID,
+  measurementId: process.env.FB_MEASUREMENT_ID,
 };
 
 const app = firebase.initializeApp(firebaseConfig);
