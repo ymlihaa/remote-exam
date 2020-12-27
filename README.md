@@ -11,14 +11,31 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ### `npm run build`
+### Projenin Amacı :
+<p>
+  Öğrencilerin bir araya gelmeden , 
+  Öğretmenlerin optikleri toplamasına gerek kalmadan, öğrencileri uzaktan deneme sınavı yapabilmeleri ve bu sınavların analizlerinin yapılabilmesi amaçlanmaktadır.
+  </p>
 
 ## Bu proje ;
 
 <p>
 <ul>
   <li> 
-      Kitapçıkları bulunan öğrencilerin , Öğretmenler tarafından ayarlanan zaman dilimleri arasında sisteme girip optiği doldurmak suretiyle öğrencilerin uzaktan deneme sınavı yapmlarına olanak sağlamaktadır.
+      Kitapçıkları bulunan öğrencilerin , Öğretmenler tarafından ayarlanan zaman dilimleri arasında sisteme girip optiği doldurmak suretiyle öğrencilerin uzaktan deneme sınavı yapmalarına olanak sağlamaktadır.
   </li>
+  <li>
+    Sistem, öğrencilerin puanlarını sınav bitiminde anlık olarak hesaplamaktadır .(Geliştirme Aşamasında)
+  </li>
+  
+  <li>
+  Öğretmenlere , öğrencilerin hangi sorularda ne kadar yanlış  yaptıklarının analizini yapma imkanı vericektir. (Geliştirme Aşamasında) 
+</li>
+
+<li>
+  Sınava giren bütün öğrenciler arasında , puana göre sıralama yapılacaktır. (Geliştirme Aşamasında)
+  </li>
+  
   </ul>
   
 </p>
