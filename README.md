@@ -12,6 +12,16 @@ You will also see any lint errors in the console.
 
 ### `npm run build`
 
+## Bu proje ;
+
+<p>
+<ul>
+  <li> 
+      Kitapçıkları bulunan öğrencilerin , Öğretmenler tarafından ayarlanan zaman dilimleri arasında sisteme girip optiği doldurmak suretiyle öğrencilerin uzaktan deneme sınavı yapmlarına olanak sağlamaktadır.
+  </li>
+  </ul>
+  
+</p>
 
 ### Login 
 
