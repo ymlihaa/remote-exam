@@ -11,11 +11,14 @@ class Optik extends Component {
       result: [],
       startIndex: 0,
       wait: false,
+      time: new Date().toLocaleString(),
+      remainingTime: "",
     };
     this.addClick = this.addClick.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
     this.finishExam = this.finishExam.bind(this);
+    this.didMountTimer = this.didMountTimer.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +36,9 @@ class Optik extends Component {
     this.setState({
       result: tempArr,
     });
+
+    this.didMountTimer();
+
     // console.log("cDM : optk", typeof tempArr);
   }
 
@@ -45,6 +51,26 @@ class Optik extends Component {
   // Button componenti içerisinden aldığı index ve flag bilgileri ne göre
   // arrayin index numaralı indisine flag datasını yazar
   // Sonrasında state i günceller
+
+  didMountTimer() {
+    const data = this.props.userInfo.ExamID;
+    console.log("cmdTimer", this.props.userInfo.ExamID);
+    axios({
+      method: "post",
+      url: "http://localhost:8099/exam/getOne",
+      data: {
+        examID: this.props.userInfo.ExamID,
+      },
+    })
+      .then((response) => {
+        console.log(this.state.time);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+
   addClick(index, flag) {
     const arr = { ...this.state.result };
     arr[index] = flag;

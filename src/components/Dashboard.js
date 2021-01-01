@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import AddExam from "./AddExam";
+import ListedExam from "./ListedExam";
 // import { Alert } from "react-bootstrap";
 import UpdateProfile from "./UpdateProfile";
 // import star from "./stars.svg";
@@ -94,6 +95,8 @@ export default function Dashboard() {
         return <div>hello delete Exam</div>;
       case "updateProfile":
         return <UpdateProfile />;
+      case "listedExam":
+        return <ListedExam />;
       default:
         return <div>no content</div>;
     }
