@@ -7,6 +7,8 @@ import bg from "./studentlogin.svg";
 import avatar from "./stars.svg";
 import axios from "axios";
 
+import moment from "moment";
+
 export default function Join({ dispatch }) {
   const usernameRef = useRef();
   const surnameRef = useRef();
@@ -46,48 +48,19 @@ export default function Join({ dispatch }) {
   }
 
   async function datesParse(arr, now) {
-    let start, end;
-    let temp_s, temp_e;
-    let different_times_db, different_times_client;
-    let different_days_db, different_days_client;
-    let temp = arr[0].replace(/\D/g, " ");
-    let temp_one = arr[1].replace(/\D/g, " ");
-    temp = temp.split(" ");
-    temp_one = temp_one.split(" ");
-    console.log("datesParseMethod:", temp[0]);
+    let temp_now = new moment();
+    let start = new moment(arr[0]);
+    let end = new moment(arr[1]);
+    let db_duration = moment.duration(end.diff(start));
+    let cl_duration = moment.duration(temp_now.diff(start));
+    db_duration = db_duration.as("minutes");
+    cl_duration = cl_duration.as("minutes");
 
-    start = new Date(
-      parseInt(temp[0]),
-      parseInt(temp[1]) - 1,
-      parseInt(temp[2]),
-      parseInt(temp[3]),
-      parseInt(temp[4]),
-      parseInt(temp[5])
-    );
-    end = new Date(
-      parseInt(temp_one[0]),
-      parseInt(temp_one[1]) - 1,
-      parseInt(temp_one[2]),
-      parseInt(temp_one[3]),
-      parseInt(temp_one[4]),
-      parseInt(temp_one[5])
-    );
+    console.log("db diff : ", db_duration);
+    console.log("cl diff : ", cl_duration);
 
-    temp_s = start.getTime();
-    temp_e = end.getTime();
-
-    different_times_db = temp_e - temp_s;
-    different_times_client = now - temp_s;
-    different_days_db = different_times_db / (1000 * 3600 * 24);
-    different_days_client = different_times_client / (1000 * 3600 * 24);
-
-    if (
-      different_days_client == 0 ||
-      different_days_client <= different_days_db
-    ) {
-      console.log("Sınav kullanılabilir :", different_days_client);
-      console.log("client :", different_days_client);
-      console.log("db :", different_days_db);
+    if (cl_duration >= 0 && cl_duration <= db_duration) {
+      console.log("Sınav Kullanılabilir ...");
       await requestOptik();
     } else {
       setError("Bu sınav Kullanılamaz. ");
