@@ -1,6 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FB_APIKEY,

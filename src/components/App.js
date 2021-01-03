@@ -32,7 +32,7 @@ export default function App() {
           name: action.user.name,
           surname: action.user.surname,
           studentNumber: action.user.studentNumber,
-          ExamID: action.user.ExamID,
+          ExamID: action.user.examID,
           isTrue: action.user.isTrue,
         };
     }
