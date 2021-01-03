@@ -1,5 +1,14 @@
 import React, { useRef, useState } from "react";
-import { DatePicker, Space, ConfigProvider, Input, Row, Col } from "antd";
+import {
+  DatePicker,
+  Space,
+  ConfigProvider,
+  Input,
+  Row,
+  Col,
+  TimePicker,
+  Select,
+} from "antd";
 import { Link, useHistory } from "react-router-dom";
 import ResultComponent from "./Result";
 import moment from "moment";
@@ -10,23 +19,26 @@ import axios from "axios";
 export default function AddExam({ setDate }) {
   const { TextArea } = Input;
   const { RangePicker } = DatePicker;
+  const { Option } = Select;
+
   const [answerKey, setKey] = useState();
   const [result, setResult] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
+  const [type, setType] = useState("");
 
   const history = useHistory();
 
-  const onChange = (dates, dateStrings) => {
-    // console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-    setStartTime(dateStrings[0].toString());
-    setStopTime(dateStrings[1].toString());
-    console.log("start:", startTime);
-    console.log("stop", endTime);
-  };
+  // const onChange = (dates, dateStrings) => {
+  //   // console.log("From: ", dates[0], ", to: ", dates[1]);
+  //   console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
+  //   setStartTime(dateStrings[0].toString());
+  //   setStopTime(dateStrings[1].toString());
+  //   console.log("start:", startTime);
+  //   console.log("stop", endTime);
+  // };
 
   function handleChange(e) {
     setKey(e.target.value);
@@ -39,6 +51,7 @@ export default function AddExam({ setDate }) {
           startTime: startTime,
           endTime: endTime,
           answerKey: answerKey,
+          type: type,
         })
         .then(function (response) {
           console.log(response);
@@ -53,6 +66,64 @@ export default function AddExam({ setDate }) {
     }
   }
 
+  function onChange(value, dateString) {
+    let temp_dataString = moment(dateString);
+    let times = temp_dataString;
+    temp_dataString = temp_dataString.format("YYYY/MM/DD HH:mm:ss");
+    times = timeAdd(times);
+    times = times.format("YYYY/MM/DD HH:mm:ss");
+    setStartTime(temp_dataString.toLocaleString());
+    setStopTime(times.toLocaleString());
+  }
+  function onOk(value) {
+    console.log("onOk: ", value);
+  }
+
+  function handleSelect(value) {
+    setType(value);
+    console.log(type);
+  }
+
+  function timeAdd(time) {
+    let added_time;
+    switch (type) {
+      case "TYT":
+        added_time = time.add(135, "m");
+        return added_time;
+      case "AYT":
+        added_time = time.add(180, "m");
+        return added_time;
+
+      case "Dil":
+        added_time = time.add(120, "m");
+        return added_time;
+    }
+  }
+
+  const SelectBox = () => {
+    return (
+      <Select
+        onSelect={handleSelect}
+        showSearch
+        style={{ width: 200, cursor: "pointer" }}
+        placeholder="Sınav Tipini Belirle"
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+        filterSort={(optionA, optionB) =>
+          optionA.children
+            .toLowerCase()
+            .localeCompare(optionB.children.toLowerCase())
+        }
+      >
+        <Option value="TYT">TYT</Option>
+        <Option value="AYT">AYT</Option>
+        <Option value="Dil">YABANCI DİL</Option>
+      </Select>
+    );
+  };
+
   const element = () => {};
   return (
     <div className="text-center">
@@ -60,19 +131,10 @@ export default function AddExam({ setDate }) {
         <Space direction="vertical" size={12}>
           <ConfigProvider locale={tr}>
             <div className="mb-3">
-              <RangePicker
-                ranges={{
-                  Today: [moment(), moment()],
-                  "This Month": [
-                    moment().startOf("month"),
-                    moment().endOf("month"),
-                  ],
-                }}
-                showTime
-                format="YYYY/MM/DD HH:mm:ss"
-                onChange={onChange}
-              />
+              <SelectBox />
+              <DatePicker showTime onChange={onChange} onOk={onOk} />
             </div>
+
             <div className="card p-3 w-100" style={{ borderRadius: " 20px" }}>
               <div className="d-flex align-items-center justify-content-center  flex-column">
                 <div
