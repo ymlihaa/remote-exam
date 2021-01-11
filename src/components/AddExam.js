@@ -15,6 +15,7 @@ import moment from "moment";
 import tr from "antd/lib/locale/tr_TR";
 import "antd/dist/antd.css";
 import axios from "axios";
+import TYT_Form from "./add_exam_comp/TYT_form";
 
 export default function AddExam({ setDate }) {
   const { TextArea } = Input;
@@ -27,18 +28,9 @@ export default function AddExam({ setDate }) {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("TYT");
 
   const history = useHistory();
-
-  // const onChange = (dates, dateStrings) => {
-  //   // console.log("From: ", dates[0], ", to: ", dates[1]);
-  //   console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-  //   setStartTime(dateStrings[0].toString());
-  //   setStopTime(dateStrings[1].toString());
-  //   console.log("start:", startTime);
-  //   console.log("stop", endTime);
-  // };
 
   function handleChange(e) {
     setKey(e.target.value);
@@ -55,7 +47,6 @@ export default function AddExam({ setDate }) {
         })
         .then(function (response) {
           console.log(response);
-          // history.push("/success-create");
           setResult(true);
         })
         .catch(function (error) {
@@ -105,6 +96,7 @@ export default function AddExam({ setDate }) {
       <Select
         onSelect={handleSelect}
         showSearch
+        defaultValue={type}
         style={{ width: 200, cursor: "pointer" }}
         placeholder="Sınav Tipini Belirle"
         optionFilterProp="children"
@@ -144,7 +136,8 @@ export default function AddExam({ setDate }) {
                 >
                   Lütfen Cevap Anahtarını Giriniz .
                 </div>
-                <TextArea rows={20} onChange={handleChange} />
+                {/* <TextArea rows={20} onChange={handleChange} /> */}
+                <TYT_Form />
                 <button
                   className="teacher-btn "
                   style={{ width: "50%" }}
