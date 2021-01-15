@@ -27,18 +27,9 @@ export default function AddExam({ setDate }) {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Sınav Tipi");
 
   const history = useHistory();
-
-  // const onChange = (dates, dateStrings) => {
-  //   // console.log("From: ", dates[0], ", to: ", dates[1]);
-  //   console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-  //   setStartTime(dateStrings[0].toString());
-  //   setStopTime(dateStrings[1].toString());
-  //   console.log("start:", startTime);
-  //   console.log("stop", endTime);
-  // };
 
   function handleChange(e) {
     setKey(e.target.value);
@@ -55,7 +46,6 @@ export default function AddExam({ setDate }) {
         })
         .then(function (response) {
           console.log(response);
-          // history.push("/success-create");
           setResult(true);
         })
         .catch(function (error) {
@@ -103,10 +93,10 @@ export default function AddExam({ setDate }) {
   const SelectBox = () => {
     return (
       <Select
+        defaultValue={type}
         onSelect={handleSelect}
         showSearch
         style={{ width: 200, cursor: "pointer" }}
-        placeholder="Sınav Tipini Belirle"
         optionFilterProp="children"
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -124,7 +114,6 @@ export default function AddExam({ setDate }) {
     );
   };
 
-  const element = () => {};
   return (
     <div className="text-center">
       {!result ? (
@@ -136,7 +125,7 @@ export default function AddExam({ setDate }) {
             </div>
 
             <div className="card p-3 w-100" style={{ borderRadius: " 20px" }}>
-              <div className="d-flex align-items-center justify-content-center  flex-column">
+              {/* <div className="d-flex align-items-center justify-content-center  flex-column">
                 <div
                   class="alert alert-danger"
                   style={{ padding: "5px" }}
@@ -152,7 +141,7 @@ export default function AddExam({ setDate }) {
                 >
                   Kaydet
                 </button>
-              </div>
+              </div> */}
             </div>
           </ConfigProvider>
         </Space>
