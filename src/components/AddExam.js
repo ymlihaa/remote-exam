@@ -8,7 +8,12 @@ import {
   Col,
   TimePicker,
   Select,
+  Empty,
 } from "antd";
+import TYT from "./answerForms/TYT_form";
+import AYT from "./answerForms/AYT_form";
+import YDS from "./answerForms/YDS_form";
+
 import { Link, useHistory } from "react-router-dom";
 import ResultComponent from "./Result";
 import moment from "moment";
@@ -109,9 +114,22 @@ export default function AddExam({ setDate }) {
       >
         <Option value="TYT">TYT</Option>
         <Option value="AYT">AYT</Option>
-        <Option value="Dil">YABANCI DİL</Option>
+        <Option value="YDS">YABANCI DİL</Option>
       </Select>
     );
+  };
+
+  const AnswerForm = () => {
+    switch (type) {
+      case "TYT":
+        return <TYT />;
+      case "AYT":
+        return <AYT />;
+      case "YDS":
+        return <YDS />;
+      default:
+        return <Empty description={"Henüz sınav tipi seçmediniz."} />;
+    }
   };
 
   return (
@@ -125,6 +143,8 @@ export default function AddExam({ setDate }) {
             </div>
 
             <div className="card p-3 w-100" style={{ borderRadius: " 20px" }}>
+              <AnswerForm />
+
               {/* <div className="d-flex align-items-center justify-content-center  flex-column">
                 <div
                   class="alert alert-danger"
