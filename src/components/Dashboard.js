@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import AddExam from "./AddExam";
 // import { Alert } from "react-bootstrap";
 import UpdateProfile from "./UpdateProfile";
+import ListedExam from "./ListedExam";
 // import star from "./stars.svg";
 
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -54,6 +55,12 @@ export default function Dashboard() {
         return (
           <div>
             <AddExam />
+          </div>
+        );
+      case "listedExam":
+        return (
+          <div>
+            <ListedExam />
           </div>
         );
       case "updateProfile":
