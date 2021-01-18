@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, Form, Card } from "antd";
 import json from "../examTypeJson/YDS_info";
-
+import { card_Box, card_Container } from "./form_style";
 function YDS_form() {
   const [answer, setAnswer] = useState([]);
   const handleRef = useRef(0);
@@ -55,8 +55,10 @@ function YDS_form() {
   });
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div className="card p-1 w-100">{yds}</div>
+    <div style={card_Container}>
+      <div className="card " style={card_Box}>
+        {yds}
+      </div>
     </div>
   );
 }

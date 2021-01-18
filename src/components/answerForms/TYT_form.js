@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, Form, Card } from "antd";
 import json from "../examTypeJson/TYT_info";
-function TYT_form() {
+import { card_Box, card_Container } from "./form_style";
+
+function TYT_form({ handleChange }) {
   const [answer, setAnswer] = useState([]);
   const handleRef = useRef(0);
   const tr = [];
@@ -14,11 +16,11 @@ function TYT_form() {
   const kimya = [];
   const biyoloji = [];
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setAnswer((answer) => [...answer, e.target.value]);
-    console.log(answer);
-  };
+  // const handleChange = (e) => {
+  //   console.log(e.target.value);
+  //   setAnswer((answer) => [...answer, e.target.value]);
+  //   console.log(answer);
+  // };
 
   const drawForm = (limit, arr) => {
     for (let i = 0; i < limit; i++) {
@@ -78,16 +80,34 @@ function TYT_form() {
   });
 
   return (
-    <div style={{ display: "flex", flexDirection: "center" }}>
-      <div className="card m-1 p-1">{tr}</div>
-      <div className="card m-1 p-1">{mat}</div>
-      <div className="card m-1 p-1">{cografya}</div>
-      <div className="card m-1 p-1">{tarih}</div>
-      <div className="card m-1 p-1">{felsefe}</div>
-      <div className="card m-1 p-1">{din}</div>
-      <div className="card m-1 p-1">{fizik}</div>
-      <div className="card m-1 p-1">{kimya}</div>
-      <div className="card m-1 p-1">{biyoloji}</div>
+    <div style={card_Container}>
+      <div className="card " style={card_Box}>
+        {tr}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {mat}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {cografya}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {tarih}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {felsefe}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {din}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {fizik}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {kimya}
+      </div>
+      <div className="card m-1 p-1" style={card_Box}>
+        {biyoloji}
+      </div>
     </div>
   );
 }

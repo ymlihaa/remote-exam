@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Input, Form, Card } from "antd";
 import json from "../examTypeJson/AYT_info";
+import { card_Box, card_Container } from "./form_style";
 
 function AYT_form() {
   const [answer, setAnswer] = useState([]);
@@ -88,43 +89,38 @@ function AYT_form() {
   });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <div className="card " style={{ margin: "0.3rem" }}>
+    <div style={card_Container}>
+      <div className="card " style={card_Box}>
         {tde}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {mat}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {cografya_1}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {cografya_2}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {tarih_1}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {tarih_2}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {felsefe}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {din}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {fizik}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {kimya}
       </div>
-      <div className="card " style={{ margin: "0.3rem" }}>
+      <div className="card " style={card_Box}>
         {biyoloji}
       </div>
     </div>
