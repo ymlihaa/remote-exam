@@ -63,7 +63,6 @@ export default class ListedExam extends Component {
   updateExam() {}
 
   render() {
-    const deneme = this.state.success;
     const ghostArr = (
       <>
         {Object.keys(this.state.arr).map((item) => {
@@ -74,7 +73,7 @@ export default class ListedExam extends Component {
 
     return (
       <>
-        {!deneme ? (
+        {!this.state.success ? (
           <div className="d-flex justify-content-center align-items-center  flex-column ">
             <>{ghostArr}</>
           </div>
