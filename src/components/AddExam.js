@@ -8,7 +8,15 @@ import {
   Col,
   TimePicker,
   Select,
+  Empty,
 } from "antd";
+
+import form_flex from "./addExam_style";
+
+import TYT from "./answerForms/TYT_form";
+import AYT from "./answerForms/AYT_form";
+import YDS from "./answerForms/YDS_form";
+
 import { Link, useHistory } from "react-router-dom";
 import ResultComponent from "./Result";
 import moment from "moment";
@@ -28,11 +36,12 @@ export default function AddExam({ setDate }) {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
-  const [type, setType] = useState("TYT");
+  const [type, setType] = useState("Sınav Tipi");
 
   const history = useHistory();
 
   function handleChange(e) {
+    console.log(e.target.value);
     setKey(e.target.value);
   }
 
@@ -66,6 +75,7 @@ export default function AddExam({ setDate }) {
     setStartTime(temp_dataString.toLocaleString());
     setStopTime(times.toLocaleString());
   }
+
   function onOk(value) {
     console.log("onOk: ", value);
   }
@@ -94,11 +104,11 @@ export default function AddExam({ setDate }) {
   const SelectBox = () => {
     return (
       <Select
+        defaultValue={type}
         onSelect={handleSelect}
         showSearch
         defaultValue={type}
         style={{ width: 200, cursor: "pointer" }}
-        placeholder="Sınav Tipini Belirle"
         optionFilterProp="children"
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -111,44 +121,104 @@ export default function AddExam({ setDate }) {
       >
         <Option value="TYT">TYT</Option>
         <Option value="AYT">AYT</Option>
-        <Option value="Dil">YABANCI DİL</Option>
+        <Option value="YDS">YABANCI DİL</Option>
       </Select>
     );
   };
 
-  const element = () => {};
+  const AnswerForm = () => {
+    switch (type) {
+      case "TYT":
+        return (
+          <>
+            <div>
+              <div
+                class="alert alert-danger"
+                style={{ padding: "5px" }}
+                role="alert"
+              >
+                Lütfen Cevap Anahtarını Giriniz .
+              </div>
+            </div>
+            <TYT />
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <button
+                className="teacher-btn "
+                style={{ width: "50%" }}
+                onClick={handleSubmit}
+              >
+                Kaydet
+              </button>
+            </div>
+          </>
+        );
+      case "AYT":
+        return (
+          <>
+            <div>
+              <div
+                class="alert alert-danger"
+                style={{ padding: "5px" }}
+                role="alert"
+              >
+                Lütfen Cevap Anahtarını Giriniz .
+              </div>
+            </div>
+            <AYT />
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <button
+                className="teacher-btn "
+                style={{ width: "50%" }}
+                onClick={handleSubmit}
+              >
+                Kaydet
+              </button>
+            </div>
+          </>
+        );
+      case "YDS":
+        return (
+          <>
+            <div>
+              <div
+                class="alert alert-danger"
+                style={{ padding: "5px" }}
+                role="alert"
+              >
+                Lütfen Cevap Anahtarını Giriniz .
+              </div>
+            </div>
+            <YDS />
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <button
+                className="teacher-btn "
+                style={{ width: "50%" }}
+                onClick={handleSubmit}
+              >
+                Kaydet
+              </button>
+            </div>
+          </>
+        );
+      default:
+        return <Empty description={"Henüz sınav tipi seçmediniz."} />;
+    }
+  };
+
   return (
-    <div className="text-center">
+    <div className="text-center w-100">
       {!result ? (
-        <Space direction="vertical" size={12}>
+        <>
           <ConfigProvider locale={tr}>
             <div className="mb-3">
               <SelectBox />
               <DatePicker showTime onChange={onChange} onOk={onOk} />
             </div>
-
-            <div className="card p-3 w-100" style={{ borderRadius: " 20px" }}>
-              <div className="d-flex align-items-center justify-content-center  flex-column">
-                <div
-                  class="alert alert-danger"
-                  style={{ padding: "5px" }}
-                  role="alert"
-                >
-                  Lütfen Cevap Anahtarını Giriniz .
-                </div>
-                {/* <TextArea rows={20} onChange={handleChange} /> */}
-                <TYT_Form />
-                <button
-                  className="teacher-btn "
-                  style={{ width: "50%" }}
-                  onClick={handleSubmit}
-                >
-                  Kaydet
-                </button>
-              </div>
-            </div>
           </ConfigProvider>
-        </Space>
+          <div className="w-100">
+            <AnswerForm />
+          </div>
+        </>
       ) : (
         <ResultComponent message={"Sınavınız başarıyla kaydedildi ."} />
       )}
