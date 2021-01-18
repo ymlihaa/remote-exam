@@ -36,11 +36,7 @@ export default function AddExam({ setDate }) {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
-<<<<<<< HEAD
-  const [type, setType] = useState("TYT");
-=======
   const [type, setType] = useState("Sınav Tipi");
->>>>>>> add-exam-feature
 
   const history = useHistory();
 
@@ -218,30 +214,6 @@ export default function AddExam({ setDate }) {
               <SelectBox />
               <DatePicker showTime onChange={onChange} onOk={onOk} />
             </div>
-<<<<<<< HEAD
-
-            <div className="card p-3 w-100" style={{ borderRadius: " 20px" }}>
-              <div className="d-flex align-items-center justify-content-center  flex-column">
-                <div
-                  class="alert alert-danger"
-                  style={{ padding: "5px" }}
-                  role="alert"
-                >
-                  Lütfen Cevap Anahtarını Giriniz .
-                </div>
-                {/* <TextArea rows={20} onChange={handleChange} /> */}
-                <TYT_Form />
-                <button
-                  className="teacher-btn "
-                  style={{ width: "50%" }}
-                  onClick={handleSubmit}
-                >
-                  Kaydet
-                </button>
-              </div>
-            </div>
-=======
->>>>>>> add-exam-feature
           </ConfigProvider>
           <div className="w-100">
             <AnswerForm />
