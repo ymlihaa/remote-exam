@@ -12,6 +12,7 @@ import {
   LaptopOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+
 import { Update } from "@material-ui/icons";
 
 export default function Dashboard() {
@@ -34,41 +35,6 @@ export default function Dashboard() {
     Update();
   });
 
-  // return (
-  //   <>
-  //     {/* className="container d-flex flex-column align-items-center */}
-  //     {/* justify-content-center w-100 " */}
-  //     {/* <form>
-  //             <div class="form-group">
-  //               <label for="formGroupExampleInput">Example label</label>
-  //               <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="formGroupExampleInput"
-  //                 placeholder="Example input"
-  //               />
-  //             </div>
-  //             <div class="form-group">
-  //               <label for="formGroupExampleInput2">Another label</label>
-  //               <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="formGroupExampleInput2"
-  //                 placeholder="Another input"
-  //               />
-  //             </div>
-  //           </form> */}
-  //     {/* <h2 className="text-center mb-4">Profile</h2> */}
-  //     {/* {error && <Alert variant="danger">{error}</Alert>} */}
-  //     {/* <strong>Email:</strong> {currentUser && currentUser.email} */}
-  //     {/* <Link to="/update-profile" className="btn">
-  //             Update Profile
-  //           </Link> */}
-
-  //     {/* <Datepicker /> */}
-  //   </>
-  // );
-
   async function handleLogout() {
     try {
       await logout();
@@ -90,8 +56,6 @@ export default function Dashboard() {
             <AddExam />
           </div>
         );
-      case "deleteExam":
-        return <div>hello delete Exam</div>;
       case "updateProfile":
         return <UpdateProfile />;
       default:
@@ -102,7 +66,6 @@ export default function Dashboard() {
   return (
     <Layout>
       <Header className="header" style={{ backgroundColor: "#38d39f" }}>
-        {/* <div className="logo" /> */}
         <Menu
           mode="horizontal"
           defaultSelectedKeys={["2"]}
@@ -128,7 +91,6 @@ export default function Dashboard() {
               title="Kullanıcı İşlemleri"
             >
               <Menu.Item key="updateProfile">Profili Güncelle</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub2"
@@ -136,7 +98,6 @@ export default function Dashboard() {
               title="Sınav İşlemleri"
             >
               <Menu.Item key="addExam">Sınav Ekle</Menu.Item>
-              <Menu.Item key="deleteExam">Sınav Sil</Menu.Item>
               <Menu.Item key="listedExam">Sınavları Listele</Menu.Item>
             </SubMenu>
             <SubMenu key="sub3" icon={<NotificationOutlined />} title="Ayarlar">

@@ -23,7 +23,6 @@ import moment from "moment";
 import tr from "antd/lib/locale/tr_TR";
 import "antd/dist/antd.css";
 import axios from "axios";
-import TYT_Form from "./add_exam_comp/TYT_form";
 
 export default function AddExam({ setDate }) {
   const { TextArea } = Input;
