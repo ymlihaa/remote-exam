@@ -2,19 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input, Form, Card } from "antd";
 import json from "../examTypeJson/YDS_info";
 import { card_Box, card_Container } from "./form_style";
-function YDS_form() {
-  const [answer, setAnswer] = useState([]);
-  const handleRef = useRef(0);
-
+function YDS_form({ handleChange }) {
   const yds = [];
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setAnswer((answer) => [...answer, e.target.value]);
-    console.log(answer);
-  };
-
-  const drawForm = (limit, arr) => {
+  const drawForm = (limit, arr, key) => {
     for (let i = 0; i < parseInt(limit); i++) {
       arr.push(
         <div
@@ -35,7 +26,7 @@ function YDS_form() {
             <span style={{ marginRight: ".5rem" }}>{i + 1 + ". Soru"}</span>
           </div>
           <Input
-            onChange={handleChange}
+            onChange={handleChange(key, i)}
             style={{ width: "5rem" }}
             size={"large"}
           />
@@ -48,7 +39,7 @@ function YDS_form() {
     switch (key) {
       case "yd":
         yds.push(<h3>Yabancı Dil</h3>);
-        return drawForm(json[key], yds);
+        return drawForm(json[key], yds, key);
       default:
         return;
     }

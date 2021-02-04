@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   DatePicker,
   Space,
@@ -29,40 +29,42 @@ export default function AddExam({ setDate }) {
   const { RangePicker } = DatePicker;
   const { Option } = Select;
 
-  const [answerKey, setKey] = useState();
+  const [answer, setAnswer] = useState({});
+
+  const handleChange = (propertyName, index) => (e) => {
+    const arr = answer;
+    if (arr[propertyName] === undefined) {
+      arr[propertyName] = {};
+    }
+    arr[propertyName][parseInt(index)] = e.target.value.toUpperCase();
+    setAnswer((answer) => arr);
+    console.log({ ...answer });
+  };
+
   const [result, setResult] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
   const [type, setType] = useState("Sınav Tipi");
-
   const history = useHistory();
 
-  function handleChange(e) {
-    console.log(e.target.value);
-    setKey(e.target.value);
-  }
-
   async function handleSubmit() {
-    try {
-      await axios
-        .post("http://localhost:8099/exam/create", {
-          startTime: startTime,
-          endTime: endTime,
-          answerKey: answerKey,
-          type: type,
-        })
-        .then(function (response) {
-          console.log(response);
-          setResult(true);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } catch {
-      console.log("not created");
-    }
+    await axios
+      .post("http://localhost:8099/exam/create", {
+        startTime: startTime,
+        endTime: endTime,
+        answerKey: answer,
+        type: type,
+      })
+      .then(function (response) {
+        console.log(response);
+        setResult(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("İşlem Gerçekleştirilemedi.");
+      });
   }
 
   function onChange(value, dateString) {
@@ -70,6 +72,7 @@ export default function AddExam({ setDate }) {
     let times = temp_dataString;
     temp_dataString = temp_dataString.format("YYYY/MM/DD HH:mm:ss");
     times = timeAdd(times);
+    console.log("times", times);
     times = times.format("YYYY/MM/DD HH:mm:ss");
     setStartTime(temp_dataString.toLocaleString());
     setStopTime(times.toLocaleString());
@@ -139,7 +142,7 @@ export default function AddExam({ setDate }) {
                 Lütfen Cevap Anahtarını Giriniz .
               </div>
             </div>
-            <TYT />
+            <TYT handleChange={handleChange} />
             <div className="d-flex flex-column justify-content-center align-items-center">
               <button
                 className="teacher-btn "
@@ -163,7 +166,7 @@ export default function AddExam({ setDate }) {
                 Lütfen Cevap Anahtarını Giriniz .
               </div>
             </div>
-            <AYT />
+            <AYT handleChange={handleChange} />
             <div className="d-flex flex-column justify-content-center align-items-center">
               <button
                 className="teacher-btn "
@@ -187,7 +190,7 @@ export default function AddExam({ setDate }) {
                 Lütfen Cevap Anahtarını Giriniz .
               </div>
             </div>
-            <YDS />
+            <YDS handleChange={handleChange} />
             <div className="d-flex flex-column justify-content-center align-items-center">
               <button
                 className="teacher-btn "

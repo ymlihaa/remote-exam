@@ -3,10 +3,7 @@ import { Input, Form, Card } from "antd";
 import json from "../examTypeJson/AYT_info";
 import { card_Box, card_Container } from "./form_style";
 
-function AYT_form() {
-  const [answer, setAnswer] = useState([]);
-  const handleRef = useRef(0);
-
+function AYT_form({ handleChange }) {
   const tde = [];
   const tarih_1 = [];
   const tarih_2 = [];
@@ -19,13 +16,7 @@ function AYT_form() {
   const kimya = [];
   const biyoloji = [];
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setAnswer((answer) => [...answer, e.target.value]);
-    console.log(answer);
-  };
-
-  const drawForm = (limit, arr) => {
+  const drawForm = (limit, arr, key) => {
     for (let i = 0; i < limit; i++) {
       arr.push(
         <div style={{ padding: "1rem" }}>
@@ -39,7 +30,7 @@ function AYT_form() {
             <span style={{ marginRight: ".5rem" }}>{i + 1 + ". Soru"}</span>
           </div>
           <Input
-            onChange={handleChange}
+            onChange={handleChange(key, i)}
             style={{ width: "5rem" }}
             size={"large"}
           />
@@ -52,37 +43,37 @@ function AYT_form() {
     switch (key) {
       case "tde":
         tde.push(<h5>Türk Dili ve Edebiyatı</h5>);
-        return drawForm(json[key], tde);
+        return drawForm(json[key], tde, key);
       case "mat":
         mat.push(<h5>Matematik</h5>);
-        return drawForm(json[key], mat);
+        return drawForm(json[key], mat, key);
       case "tarih_1":
         tarih_1.push(<h5>Tarih-1</h5>);
-        return drawForm(json[key], tarih_1);
+        return drawForm(json[key], tarih_1, key);
       case "cografya_1":
         cografya_1.push(<h5>Coğrafya-1</h5>);
-        return drawForm(json[key], cografya_1);
+        return drawForm(json[key], cografya_1, key);
       case "tarih_2":
         tarih_2.push(<h5>Tarih-2</h5>);
-        return drawForm(json[key], tarih_2);
+        return drawForm(json[key], tarih_2, key);
       case "cografya_2":
         cografya_2.push(<h5>Tarih-2</h5>);
-        return drawForm(json[key], cografya_2);
+        return drawForm(json[key], cografya_2, key);
       case "felsefe":
         felsefe.push(<h5>Felsefe</h5>);
-        return drawForm(json[key], felsefe);
+        return drawForm(json[key], felsefe, key);
       case "din":
         din.push(<h5>Din Kültürü </h5>);
-        return drawForm(json[key], din);
+        return drawForm(json[key], din, key);
       case "fizik":
         fizik.push(<h5>Fizik</h5>);
-        return drawForm(json[key], fizik);
+        return drawForm(json[key], fizik, key);
       case "kimya":
         kimya.push(<h5>Kimya</h5>);
-        return drawForm(json[key], kimya);
+        return drawForm(json[key], kimya, key);
       case "biyo":
         biyoloji.push(<h5>Biyoloji</h5>);
-        return drawForm(json[key], biyoloji);
+        return drawForm(json[key], biyoloji, key);
       default:
         return;
     }
