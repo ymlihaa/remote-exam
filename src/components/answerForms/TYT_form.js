@@ -64,7 +64,7 @@ function TYT_form({ handleChange }) {
       case "kimya":
         kimya.push(<h3>Kimya</h3>);
         return drawForm(json[key], kimya, key);
-      case "biyoloji":
+      case "biyo":
         biyoloji.push(<h3>Biyoloji</h3>);
         return drawForm(json[key], biyoloji, key);
       default:
