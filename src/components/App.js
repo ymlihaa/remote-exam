@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import Optik from "./Optik";
+import Optik from "./Optik_comp/dev_optik";
 import ExamAlert from "./ExamAlert";
 import AppContext from "../context/app-context";
 import { useHistory } from "react-router-dom";
@@ -15,6 +15,7 @@ export default function App() {
     studentNumber: "",
     ExamID: "",
     isTrue: false,
+    type: "",
   };
 
   function reducer(state, action) {
@@ -33,7 +34,7 @@ export default function App() {
           name: action.user.name,
           surname: action.user.surname,
           studentNumber: action.user.studentNumber,
-          ExamID: action.user.ExamID,
+          ExamID: action.user.examID,
           isTrue: action.user.isTrue,
         };
     }
@@ -75,7 +76,7 @@ export default function App() {
         {element !== null && element}
 
         {state.isTrue ? (
-          <Optik userInfo={state} setAlertType={setAlertType} />
+          <Optik User={state} setAlertType={setAlertType} />
         ) : (
           <Join />
         )}
