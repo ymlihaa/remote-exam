@@ -5,6 +5,8 @@ import { useAuth } from "../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import bg from "./studentlogin.svg";
 import avatar from "./stars.svg";
+import axios from "axios";
+import moment from "moment";
 
 export default function Join({ dispatch }) {
   const usernameRef = useRef();
@@ -17,22 +19,76 @@ export default function Join({ dispatch }) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+
+  //   try {
+  //     await thisContext.dispatch({
+  //       type: "setState",
+  //       name: usernameRef.current.value,
+  //       surname: surnameRef.current.value,
+  //       studentNumber: studentNumberRef.current.value,
+  //       ExamID: examIDRef.current.value,
+  //       onAuth: true,
+  //     });
+  //   } catch {
+  //     setError("İşlem Gerçekleştirilemedi .");
+  //   }
+
+  //   setLoading(false);
+  // }
+
   async function handleSubmit(e) {
     e.preventDefault();
+    const examID = examIDRef.current.value;
+    axios
+      .post("http://localhost:8099/exam/getOne", { examID })
+      .then((res) => {
+        console.log(res.data);
+        calculateTimeDiff(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setError("İşlem Gerçekleştirilemedi !");
+      });
+  }
 
-    try {
+  async function calculateTimeDiff(timeObj) {
+    let timeType;
+    let start = moment(timeObj.startTime);
+    let stop = moment(timeObj.endTime);
+    let now = moment();
+    let diff_time = now.diff(start, "minutes");
+
+    const User = {
+      name: usernameRef.current.value,
+      surname: surnameRef.current.value,
+      studentNumber: studentNumberRef.current.value,
+      ExamID: examIDRef.current.value,
+      onAuth: true,
+      type: timeObj.type,
+    };
+
+    switch (timeObj.type) {
+      case "TYT":
+        timeType = 135;
+      case "AYT":
+        timeType = 180;
+      case "YDS":
+        timeType = 135;
+    }
+    console.log("times between diff", diff_time);
+
+    if (diff_time > 0 && diff_time < timeType) {
+      console.log("success");
       await thisContext.dispatch({
         type: "setState",
-        name: usernameRef.current.value,
-        surname: surnameRef.current.value,
-        studentNumber: studentNumberRef.current.value,
-        ExamID: examIDRef.current.value,
-        onAuth: true,
+        User,
       });
-    } catch {
-      setError("İşlem Gerçekleştirilemedi .");
+    } else {
+      console.log("failed");
+      setError("Sınav Geçersiz !");
     }
-
     setLoading(false);
   }
 
@@ -141,63 +197,14 @@ export default function Join({ dispatch }) {
               value="Join"
               className="teacher-btn"
             />
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
           </form>
         </div>
       </div>
     </>
   );
 }
-
-//  <div
-//       className="d-flex align-items-center justify-content-center "
-//       style={{ minHeight: "100vh" }}
-//     >
-//       <div className="card p-3 mb-5 bg-white rounded">
-//         <div className="card-body">
-//           <h2 className="text-center mb-4">Sınava Gir</h2>
-//           <form>
-//             <div className="form-col p-3">
-//               <div className=" form-group row mb-3">
-//                 <input
-//                   type="text"
-//                   className="form-control"
-//                   placeholder="First name"
-//                   required
-//                 ></input>
-//               </div>
-//               <div className="form-group row mb-3">
-//                 <input
-//                   type="text"
-//                   className="form-control"
-//                   placeholder="Last name"
-//                   required
-//                 ></input>
-//               </div>
-//               <div className="form-group row mb-3">
-//                 <input
-//                   type="text"
-//                   className="form-control"
-//                   placeholder="Student Number"
-//                   required
-//                 ></input>
-//               </div>
-//               <button
-//                 onClick={() => {
-//                   thisContext.dispatch({
-//                     type: "setState",
-//                     name: currentUser.name,
-//                     surname: currentUser.surname,
-//                     studentNumber: currentUser.studentNumber,
-//                     isTrue: currentUser.isTrue,
-//                   });
-//                 }}
-//                 type="button"
-//                 className="btn btn-primary w-100 text-center mt-3"
-//               >
-//                 Join
-//               </button>
-//             </div>
-//           </form>
-//         </div>
-//       </div>
-//     </div>

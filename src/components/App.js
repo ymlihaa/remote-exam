@@ -21,11 +21,12 @@ export default function App() {
     switch (action.type) {
       case "setState":
         return {
-          name: action.name,
-          surname: action.surname,
-          studentNumber: action.studentNumber,
-          ExamID: action.ExamID,
-          isTrue: action.onAuth,
+          name: action.User.name,
+          surname: action.User.surname,
+          studentNumber: action.User.studentNumber,
+          ExamID: action.User.ExamID,
+          isTrue: action.User.onAuth,
+          type: action.User.type,
         };
       case "mounting":
         return {
