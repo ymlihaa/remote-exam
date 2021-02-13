@@ -11,9 +11,12 @@ export default function RadioButtons(props) {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+    const node = event.target;
+    const lessonName =
+      node.parentNode.parentNode.parentNode.parentNode.parentNode.className;
     console.log(event.target.value);
     console.log(props.id);
-    props.addclick(props.id, event.target.value);
+    props.addclick(props.id, event.target.value, lessonName);
   };
 
   return (
