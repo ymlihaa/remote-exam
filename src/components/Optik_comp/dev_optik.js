@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Redirect, Route, useHistory } from "react-router-dom";
+
 import axios from "axios";
 import AnswerInput from "../Button";
 import ExamAlert from "../ExamAlert";
@@ -13,7 +15,10 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
   const [startIndex, setStart] = useState(0);
   const [wait, setWait] = useState(false);
   const [alert, setAlert] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const [lessons, setLessons] = useState({});
+
+  const history = useHistory();
 
   // COMPONENT DİD MOUNT
 
@@ -53,6 +58,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
         console.log(res);
         setAlert("finishExam");
         setWait(false);
+        setRedirect(true);
         localStorage.removeItem("user");
         localStorage.removeItem("resultArr");
       })
@@ -64,7 +70,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
 
   const drawForm = (index, name, limit) => {
     const temp = lessons;
-    const localStore = { ...JSON.parse(localStorage.getItem("resultArr")) };
+    const localStore = JSON.parse(localStorage.getItem("resultArr"));
     if (temp[name] === undefined) {
       temp[name] = [];
     }
@@ -104,36 +110,46 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
 
   return (
     <>
-      <ExamAlert alertType={alert} />
+      {!redirect ? (
+        <>
+          <ExamAlert alertType={alert} />
 
-      <div className="card p-3 mb-5 bg-white rounded">
-        <div className="card-body"></div>
-        <div style={card_Box}>
-          {/* <AnswerInput addclick={addClick} />
-           */}
+          <div className="card p-3 mb-5 bg-white rounded">
+            <div className="card-body"></div>
+            <div style={card_Box}>
+              {/* <AnswerInput addclick={addClick} />
+               */}
 
-          {Object.keys(lessons).map((key) => {
-            return <div className={key}>{lessons[key]}</div>;
-          })}
-        </div>
-        <div
-          className="btn-group  d-flex 
+              {Object.keys(lessons).map((key) => {
+                return <div className={key}>{lessons[key]}</div>;
+              })}
+            </div>
+            <div
+              className="btn-group  d-flex 
             justify-content-center
             align-items-center
             pt-3"
-          role="group"
-          aria-label="Basic example"
-        >
-          <button
-            onClick={finishExam}
-            type="button"
-            className="btn btn-danger  m-1"
-            disabled={wait}
-          >
-            Sınavı Bitir
-          </button>
-        </div>
-      </div>
+              role="group"
+              aria-label="Basic example"
+            >
+              <button
+                onClick={finishExam}
+                type="button"
+                className="btn btn-danger  m-1"
+                disabled={wait}
+              >
+                Sınavı Bitir
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/login",
+          }}
+        />
+      )}
     </>
   );
 }
