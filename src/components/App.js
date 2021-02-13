@@ -6,6 +6,14 @@ import { useHistory } from "react-router-dom";
 import Join from "./Join";
 import { ContactSupportOutlined } from "@material-ui/icons";
 
+import AYT_state from "./Optik_comp/optikStates/AYT_state";
+import TYT_state from "./Optik_comp/optikStates/TYT_state";
+import YDS_state from "./Optik_comp/optikStates/YDS_state";
+
+import AYT from "./examTypeJson/AYT_info";
+import TYT from "./examTypeJson/TYT_info";
+import YDS from "./examTypeJson/YDS_info";
+
 export default function App() {
   const [alertType, setAlert] = useState("");
   const history = useHistory();
@@ -31,11 +39,12 @@ export default function App() {
         };
       case "mounting":
         return {
-          name: action.user.name,
-          surname: action.user.surname,
-          studentNumber: action.user.studentNumber,
-          ExamID: action.user.examID,
-          isTrue: action.user.isTrue,
+          name: action.User.name,
+          surname: action.User.surname,
+          studentNumber: action.User.studentNumber,
+          ExamID: action.User.examID,
+          isTrue: action.User.isTrue,
+          type: action.User.type,
         };
     }
   }
@@ -43,22 +52,23 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-    if (user) {
-      dispatch({ type: "mounting", user: user });
+    const localStore_User = JSON.parse(localStorage.getItem("user"));
+    // localStore_User && dispatch({ type: "mounting", User: localStore_User });
+    if (localStorage.getItem("user")) {
+      dispatch({ type: "mounting", User: localStore_User });
     }
   }, []);
 
   useEffect(() => {
-    const user = {
+    const User = {
       name: state.name,
       surname: state.surname,
       studentNumber: state.studentNumber,
       isTrue: state.isTrue,
       examID: state.ExamID,
+      type: state.type,
     };
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(User));
   }, [state.isTrue]);
 
   const setAlertType = (type) => {
@@ -66,6 +76,39 @@ export default function App() {
     // console.log(document.documentElement.scrollTop);
     document.documentElement.scrollTop = 0;
     setAlert(type.toString());
+    return <ExamAlert alertType={type} />;
+  };
+
+  const HandleOptik = () => {
+    switch (state.type) {
+      case "TYT":
+        return (
+          <Optik
+            User={state}
+            stateOptik={TYT_state}
+            setAlertType={setAlertType}
+            lesson={TYT}
+          />
+        );
+      case "AYT":
+        return (
+          <Optik
+            User={state}
+            stateOptik={AYT_state}
+            setAlertType={setAlertType}
+            lesson={AYT}
+          />
+        );
+      case "YDS":
+        return (
+          <Optik
+            User={state}
+            stateOptik={YDS_state}
+            setAlertType={setAlertType}
+            lesson={YDS}
+          />
+        );
+    }
   };
 
   const element = <ExamAlert alertType={alertType} />;
@@ -75,11 +118,7 @@ export default function App() {
       <div className="container d-flex flex-column align-items-center justify-content-center">
         {element !== null && element}
 
-        {state.isTrue ? (
-          <Optik User={state} setAlertType={setAlertType} />
-        ) : (
-          <Join />
-        )}
+        {state.isTrue ? <HandleOptik /> : <Join />}
       </div>
     </AppContext.Provider>
   );
