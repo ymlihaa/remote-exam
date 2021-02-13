@@ -34,62 +34,32 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
     const localStore = JSON.parse(localStorage.getItem("resultArr"));
     const temp = result[lessonName];
     if (temp[lessonName] == undefined) {
-      temp[lessonName] = localStore ? localStore[lessonName] : [];
+      temp[lessonName] = localStore && localStore[lessonName];
     }
     temp[lessonName][index] = val.toUpperCase();
-    setResult({ ...result, [lessonName]: temp[lessonName] });
-    // let localStore = {
-    //   ...JSON.parse(localStorage.getItem("resultArr")),
-    // };
-
-    // if (result[lessonName] == undefined) {
-    // result[lessonName] = [];
-    // temp = result[lessonName];
-    // console.log("this undefined");
-    // } else if (localStore[lessonName]) {
-    // result[lessonName] = [...localStore[lessonName]];
-    // temp = result[lessonName];
-
-    // setResult(localStore);
-    // console.log("localRes", localStore[lessonName]);
-    // console.log("this lcoalStro result", result);
-    // }
-    // console.log("resulLessonName", result[lessonName]);
-    // temp = result[lessonName];
-    // temp.push({ index: index, key: val });
-
-    // setResult({ ...result, [lessonName]: temp });
+    setResult((result) => ({ ...result, [lessonName]: temp[lessonName] }));
   };
 
-  const nextPage = () => {
-    setAlert("upperAlert");
-  };
-  const prevPage = () => {
-    setAlert("lowerAlert");
-  };
   const finishExam = async () => {
     setWait(true);
-    // await axios
-    //   .post("http://localhost:8099/exam/finish", {
-    //     data: {
-    //       user: User,
-    //       result: result ? result : localStorage.getItem("result"),
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setAlert("finishExam");
-    //     setWait(false);
-    //     localStorage.removeItem("user");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setWait(false);
-    //   });
-    setAlert("finishExam");
-    setWait(false);
-    localStorage.removeItem("user");
-    localStorage.removeItem("resultArr");
+    await axios
+      .post("http://localhost:8099/exam/finish", {
+        data: {
+          user: User,
+          result: result ? result : localStorage.getItem("result"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setAlert("finishExam");
+        setWait(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("resultArr");
+      })
+      .catch((err) => {
+        console.log(err);
+        setWait(false);
+      });
   };
 
   const drawForm = (index, name, limit) => {
@@ -106,7 +76,11 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
             id={i}
             addclick={addClick}
             selectRadio={
-              localStore[name] === undefined ? "" : localStore[name][i]
+              localStore[name] == undefined ||
+              localStore[name] == null ||
+              localStore[name][i] == null
+                ? ""
+                : localStore[name][i]
             }
           />
         </li>
@@ -150,20 +124,6 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
           role="group"
           aria-label="Basic example"
         >
-          <button
-            type="button"
-            className="btn btn-primary  m-1"
-            onClick={prevPage}
-          >
-            Önceki Sayfa
-          </button>
-          <button
-            type="button"
-            className="btn btn-success m-1"
-            onClick={nextPage}
-          >
-            Sonraki Sayfa
-          </button>
           <button
             onClick={finishExam}
             type="button"
