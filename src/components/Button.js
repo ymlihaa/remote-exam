@@ -14,16 +14,14 @@ export default function RadioButtons(props) {
     const node = event.target;
     const lessonName =
       node.parentNode.parentNode.parentNode.parentNode.parentNode.className;
-    console.log(event.target.value);
-    console.log(props.id);
     props.addclick(props.id, event.target.value, lessonName);
   };
 
   return (
-    <div className={"w-50 d-flex justify-content-center"}>
+    <div className={"w-100 d-flex justify-content-center"}>
       <span style={{ fontWeight: "bold" }}>A</span>
       <Radio
-        checked={selectedValue === "a"}
+        checked={selectedValue === "A"}
         onChange={handleChange}
         value="a"
         label="A"
@@ -33,7 +31,7 @@ export default function RadioButtons(props) {
       <span style={{ fontWeight: "bold" }}>B</span>
 
       <Radio
-        checked={selectedValue === "b"}
+        checked={selectedValue === "B"}
         onChange={handleChange}
         value="b"
         name="radio-button-demo"
@@ -42,7 +40,7 @@ export default function RadioButtons(props) {
       <span style={{ fontWeight: "bold" }}>C</span>
 
       <Radio
-        checked={selectedValue === "c"}
+        checked={selectedValue === "C"}
         onChange={handleChange}
         value="c"
         name="radio-button-demo"
@@ -51,7 +49,7 @@ export default function RadioButtons(props) {
       <span style={{ fontWeight: "bold" }}>D</span>
 
       <Radio
-        checked={selectedValue === "d"}
+        checked={selectedValue === "D"}
         onChange={handleChange}
         value="d"
         name="radio-button-demo"
@@ -60,7 +58,7 @@ export default function RadioButtons(props) {
       <span style={{ fontWeight: "bold" }}>E</span>
 
       <Radio
-        checked={selectedValue === "e"}
+        checked={selectedValue === "E"}
         onChange={handleChange}
         value="e"
         name="radio-button-demo"
