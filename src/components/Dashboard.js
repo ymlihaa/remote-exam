@@ -13,6 +13,13 @@ import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
+  SettingOutlined,
+  AppstoreAddOutlined,
+  UnorderedListOutlined,
+  ScheduleOutlined,
+  LogoutOutlined,
+  SmileOutlined,
+  TrademarkCircleOutlined,
 } from "@ant-design/icons";
 
 import { Update } from "@material-ui/icons";
@@ -81,7 +88,7 @@ export default function Dashboard() {
   const handleTopMenu = (e) => {
     switch (e.key) {
       case "1":
-        setContent("updateProfile");
+        setContent("addExam");
         break;
       case "2":
         setContent("listedExam");
@@ -97,8 +104,10 @@ export default function Dashboard() {
           defaultSelectedKeys={["2"]}
           style={{ backgroundColor: "#38d39f", color: "white" }}
         >
+          <span style={{ fontWeight: "bold" }}>Remote Exam</span>
+
           <Menu.Item key="1" onClick={handleTopMenu}>
-            Profil
+            Sınav Ekle
           </Menu.Item>
           <Menu.Item key="2" onClick={handleTopMenu}>
             Sınavlar
@@ -119,18 +128,28 @@ export default function Dashboard() {
               icon={<UserOutlined />}
               title="Kullanıcı İşlemleri"
             >
-              <Menu.Item key="updateProfile">Profili Güncelle</Menu.Item>
+              <Menu.Item key="updateProfile" icon={<SmileOutlined />}>
+                Profili Güncelle
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub2"
-              icon={<LaptopOutlined />}
+              icon={<ScheduleOutlined />}
               title="Sınav İşlemleri"
             >
-              <Menu.Item key="addExam">Sınav Ekle</Menu.Item>
-              <Menu.Item key="listedExam">Sınavları Listele</Menu.Item>
+              <Menu.Item key="addExam" icon={<AppstoreAddOutlined />}>
+                Sınav Ekle
+              </Menu.Item>
+              <Menu.Item key="listedExam" icon={<UnorderedListOutlined />}>
+                Sınavları Listele
+              </Menu.Item>
             </SubMenu>
-            <SubMenu key="sub3" icon={<NotificationOutlined />} title="Ayarlar">
-              <Menu.Item key={"1"} onClick={handleLogout}>
+            <SubMenu key="sub3" icon={<SettingOutlined />} title="Ayarlar">
+              <Menu.Item
+                key={"1"}
+                onClick={handleLogout}
+                icon={<LogoutOutlined />}
+              >
                 Çıkış Yap
               </Menu.Item>
             </SubMenu>
