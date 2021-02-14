@@ -10,9 +10,7 @@ export default class ListedExam extends Component {
       error: false,
       success: false,
     };
-    this.updateStateArray = this.updateStateArray.bind(this);
     this.deleteExam = this.deleteExam.bind(this);
-    this.examine_Exam = this.examine_Exam.bind(this);
   }
 
   componentDidMount() {
@@ -21,20 +19,14 @@ export default class ListedExam extends Component {
         success: true,
       });
     }, 1000);
-    axios
-      .get("http://localhost:8099/exam/")
-      .then((response) => {
-        console.log(response);
-        let temp = [];
-        Object.keys(response.data).map((name) => {
-          this.setState({
-            arr: this.state.arr.concat(response.data[name]),
-          });
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    let temp = [];
+    Object.keys(this.props.student_list).map((name) => {
+      this.setState((prevState) => {
+        return {
+          arr: prevState.arr.concat(this.props.student_list[name]),
+        };
       });
+    });
   }
 
   deleteExam(e) {
@@ -59,20 +51,6 @@ export default class ListedExam extends Component {
     temp.splice(index, 1);
     this.setState({ arr: temp });
   }
-
-  examine_Exam = (e) => {
-    axios
-      .post("http://localhost:8099/exam/examine", {
-        examID: e.target.id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        this.props.handleJoinedList(res.data);
-      })
-      .catch((error) => {
-        alert("Bu sınava henüz kimse katılmadı !");
-      });
-  };
 
   updateStateArray(index) {
     let temp = [...this.state.arr];
@@ -103,39 +81,29 @@ export default class ListedExam extends Component {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Sınav ID</th>
-                <th scope="col">Başlangıç Tarihi</th>
-                <th scope="col">Bitiş Tarihi</th>
+                <th scope="col">İsim</th>
+                <th scope="col">Soy İsim</th>
+                <th scope="col">Okul Numarası</th>
+                <th scope="col">Sınav Türü</th>
+                <th scope="col">Puan</th>
               </tr>
             </thead>
             <tbody>
-              {Object.values(this.state.arr).map((item, index) => {
+              {this.state.arr.map((item, index) => {
                 return (
                   <tr>
                     <th scope="row">{index + 1}</th>
-                    <td key={item.key}>{item.key}</td>
-                    <td key={index + 2}>{item.startTime}</td>
-                    <td key={index + 3}>{item.endTime}</td>
-
-                    <td>
-                      <button
-                        id={item.key}
-                        type="button"
-                        class="btn"
-                        style={{ backgroundColor: "#32be8f", color: "white" }}
-                        onClick={this.examine_Exam}
-                      >
-                        İncele
-                      </button>
-                    </td>
+                    <td key={item.key}>{item.name}</td>
+                    <td key={index + 2}>{item.surname}</td>
+                    <td key={index + 3}>{item.studentNumber}</td>
+                    <td key={index + 3}>{item.type}</td>
+                    <td key={index + 3}>{item.point}</td>
 
                     <td>
                       <button
                         value={index}
-                        id={item.key}
                         type="button"
                         class="btn btn-danger"
-                        onClick={this.deleteExam}
                       >
                         Sil
                       </button>

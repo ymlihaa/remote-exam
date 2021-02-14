@@ -5,6 +5,7 @@ import AddExam from "./AddExam";
 // import { Alert } from "react-bootstrap";
 import UpdateProfile from "./UpdateProfile";
 import ListedExam from "./ListedExam";
+import Listed_Joined from "./dashboard/Listed_Joined";
 // import star from "./stars.svg";
 
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -22,9 +23,15 @@ export default function Dashboard() {
   const history = useHistory();
 
   const [content, setContent] = useState("addExam");
+  const [list, setList] = useState({});
 
   const { SubMenu } = Menu;
   const { Header, Content, Sider } = Layout;
+
+  function handleList(getList) {
+    setList((list) => ({ ...getList }));
+    setContent("Listed_Joined");
+  }
 
   useEffect(() => {
     if (!currentUser) {
@@ -60,11 +67,13 @@ export default function Dashboard() {
       case "listedExam":
         return (
           <div>
-            <ListedExam />
+            <ListedExam handleJoinedList={handleList} />
           </div>
         );
       case "updateProfile":
         return <UpdateProfile />;
+      case "Listed_Joined":
+        return <Listed_Joined student_list={list} />;
       default:
         return <div>no content</div>;
     }
