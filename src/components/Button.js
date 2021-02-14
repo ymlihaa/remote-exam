@@ -10,7 +10,7 @@ export default function RadioButtons(props) {
   const [selectedValue, setSelectedValue] = React.useState(props.selectRadio);
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    setSelectedValue(event.target.value.toUpperCase());
     const node = event.target;
     const lessonName =
       node.parentNode.parentNode.parentNode.parentNode.parentNode.className;
