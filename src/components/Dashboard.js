@@ -78,6 +78,16 @@ export default function Dashboard() {
         return <div>no content</div>;
     }
   };
+  const handleTopMenu = (e) => {
+    switch (e.key) {
+      case "1":
+        setContent("updateProfile");
+        break;
+      case "2":
+        setContent("listedExam");
+        break;
+    }
+  };
 
   return (
     <Layout>
@@ -87,9 +97,12 @@ export default function Dashboard() {
           defaultSelectedKeys={["2"]}
           style={{ backgroundColor: "#38d39f", color: "white" }}
         >
-          <Menu.Item key="1">Profil</Menu.Item>
-          <Menu.Item key="2">Sınavlar</Menu.Item>
-          <Menu.Item key="3">Ayarlar</Menu.Item>
+          <Menu.Item key="1" onClick={handleTopMenu}>
+            Profil
+          </Menu.Item>
+          <Menu.Item key="2" onClick={handleTopMenu}>
+            Sınavlar
+          </Menu.Item>
         </Menu>
       </Header>
       <Layout>
@@ -97,7 +110,7 @@ export default function Dashboard() {
           <Menu
             mode="inline"
             defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
+            defaultOpenKeys={["sub2"]}
             style={{ height: "100%", borderRight: 0 }}
             onClick={handleChange}
           >

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Spin, Skeleton } from "antd";
+import { Spin, Skeleton, Empty } from "antd";
 
 export default class ListedExam extends Component {
   constructor(props) {
@@ -12,7 +12,6 @@ export default class ListedExam extends Component {
     };
     this.updateStateArray = this.updateStateArray.bind(this);
     this.deleteExam = this.deleteExam.bind(this);
-    this.examine_Exam = this.examine_Exam.bind(this);
   }
 
   componentDidMount() {
@@ -56,26 +55,6 @@ export default class ListedExam extends Component {
 
   updateStateArray(index) {
     let temp = [...this.state.arr];
-    temp.splice(index, 1);
-    this.setState({ arr: temp });
-  }
-
-  examine_Exam = (e) => {
-    axios
-      .post("http://localhost:8099/exam/examine", {
-        examID: e.target.id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        this.props.handleJoinedList(res.data);
-      })
-      .catch((error) => {
-        alert("Bu sınava henüz kimse katılmadı !");
-      });
-  };
-
-  updateStateArray(index) {
-    let temp = [...this.state.arr];
 
     temp.splice(index, 1);
     this.setState({ arr: temp });
@@ -116,19 +95,6 @@ export default class ListedExam extends Component {
                     <td key={item.key}>{item.key}</td>
                     <td key={index + 2}>{item.startTime}</td>
                     <td key={index + 3}>{item.endTime}</td>
-
-                    <td>
-                      <button
-                        id={item.key}
-                        type="button"
-                        class="btn"
-                        style={{ backgroundColor: "#32be8f", color: "white" }}
-                        onClick={this.examine_Exam}
-                      >
-                        İncele
-                      </button>
-                    </td>
-
                     <td>
                       <button
                         value={index}
@@ -138,6 +104,15 @@ export default class ListedExam extends Component {
                         onClick={this.deleteExam}
                       >
                         Sil
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-info"
+                        onClick={this.updateExam}
+                      >
+                        Düzenle
                       </button>
                     </td>
                   </tr>
