@@ -54,6 +54,7 @@ export default function Join({ dispatch }) {
   }
 
   async function calculateTimeDiff(timeObj) {
+    let timeType;
     if (timeObj.type == "TYT") {
       timeType = 135;
     } else if (timeObj.type == "AYT") {
