@@ -54,7 +54,13 @@ export default function Join({ dispatch }) {
   }
 
   async function calculateTimeDiff(timeObj) {
-    let timeType;
+    if (timeObj.type == "TYT") {
+      timeType = 135;
+    } else if (timeObj.type == "AYT") {
+      timeType = 180;
+    } else {
+      timeType = 135;
+    }
     let start = moment(timeObj.startTime);
     let stop = moment(timeObj.endTime);
     let now = moment();
@@ -69,17 +75,9 @@ export default function Join({ dispatch }) {
       type: timeObj.type,
     };
 
-    switch (timeObj.type) {
-      case "TYT":
-        timeType = 135;
-      case "AYT":
-        timeType = 180;
-      case "YDS":
-        timeType = 135;
-    }
     console.log("times between diff", diff_time);
 
-    if (diff_time > 0 && diff_time < timeType) {
+    if (diff_time >= 0 && diff_time <= timeType) {
       console.log("success");
       await thisContext.dispatch({
         type: "setState",
