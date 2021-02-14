@@ -12,6 +12,7 @@ export default class ListedExam extends Component {
     };
     this.updateStateArray = this.updateStateArray.bind(this);
     this.deleteExam = this.deleteExam.bind(this);
+    this.examine_Exam = this.examine_Exam.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,25 @@ export default class ListedExam extends Component {
           success: true,
         });
         console.log("başarıyla silindi");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  updateStateArray(index) {
+    let temp = [...this.state.arr];
+    temp.splice(index, 1);
+    this.setState({ arr: temp });
+  }
+
+  examine_Exam(e) {
+    axios
+      .post("http://localhost:8099/exam/examine", {
+        examID: e.target.id,
+      })
+      .then((res) => {
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -95,6 +115,19 @@ export default class ListedExam extends Component {
                     <td key={item.key}>{item.key}</td>
                     <td key={index + 2}>{item.startTime}</td>
                     <td key={index + 3}>{item.endTime}</td>
+
+                    <td>
+                      <button
+                        id={item.key}
+                        type="button"
+                        class="btn"
+                        style={{ backgroundColor: "#32be8f", color: "white" }}
+                        onClick={this.examine_Exam}
+                      >
+                        İncele
+                      </button>
+                    </td>
+
                     <td>
                       <button
                         value={index}
@@ -104,15 +137,6 @@ export default class ListedExam extends Component {
                         onClick={this.deleteExam}
                       >
                         Sil
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-info"
-                        onClick={this.updateExam}
-                      >
-                        Düzenle
                       </button>
                     </td>
                   </tr>
