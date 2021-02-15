@@ -5,7 +5,7 @@ import AddExam from "./AddExam";
 // import { Alert } from "react-bootstrap";
 import UpdateProfile from "./UpdateProfile";
 import ListedExam from "./ListedExam";
-import Listed_Joined from "./dashboard/Listed_Joined";
+import Listed_Joined from "./dashboard/NestedTableDeneme";
 // import star from "./stars.svg";
 
 import { Layout, Menu, Breadcrumb } from "antd";
