@@ -124,6 +124,7 @@ export default class ListedExam extends Component {
                     </td>
                     <td>
                       <button
+                        id={item.key}
                         type="button"
                         class="btn btn-danger"
                         onClick={this.deleteExam}
