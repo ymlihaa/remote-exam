@@ -12,6 +12,7 @@ export default class ListedExam extends Component {
     };
     this.updateStateArray = this.updateStateArray.bind(this);
     this.deleteExam = this.deleteExam.bind(this);
+    this.examine_Exam = this.examine_Exam.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,20 @@ export default class ListedExam extends Component {
         console.log(error);
       });
   }
+
+  examine_Exam = (e) => {
+    axios
+      .post("http://localhost:8099/exam/examine", {
+        examID: e.target.id,
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.props.handleJoinedList(res.data);
+      })
+      .catch((error) => {
+        alert("Bu sınava henüz kimse katılmadı !");
+      });
+  };
 
   deleteExam(e) {
     axios
@@ -100,19 +115,20 @@ export default class ListedExam extends Component {
                         value={index}
                         id={item.key}
                         type="button"
-                        class="btn btn-danger"
-                        onClick={this.deleteExam}
+                        class="btn"
+                        style={{ backgroundColor: "#32be8f", color: "white" }}
+                        onClick={this.examine_Exam}
                       >
-                        Sil
+                        İncele
                       </button>
                     </td>
                     <td>
                       <button
                         type="button"
-                        class="btn btn-info"
-                        onClick={this.updateExam}
+                        class="btn btn-danger"
+                        onClick={this.deleteExam}
                       >
-                        Düzenle
+                        Sil
                       </button>
                     </td>
                   </tr>
