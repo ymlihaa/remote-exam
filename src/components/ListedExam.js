@@ -112,7 +112,6 @@ export default class ListedExam extends Component {
                     <td key={index + 3}>{item.endTime}</td>
                     <td>
                       <button
-                        value={index}
                         id={item.key}
                         type="button"
                         class="btn"
@@ -124,6 +123,7 @@ export default class ListedExam extends Component {
                     </td>
                     <td>
                       <button
+                        value={index}
                         id={item.key}
                         type="button"
                         class="btn btn-danger"
