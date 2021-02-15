@@ -8,7 +8,6 @@ import Optik from "./components/Optik";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import UpdateProfile from "./components/UpdateProfile";
-import Header from "./components/Header";
 
 // import Signup from "./Signup";
 // import Dashboard from "./Dashboard";
@@ -20,7 +19,6 @@ function Main() {
     <>
       <Router>
         <AuthProvider>
-          <Header />
           <Switch>
             <PrivateRoute exact path="/">
               <Dashboard />
