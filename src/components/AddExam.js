@@ -11,12 +11,9 @@ import {
   Empty,
 } from "antd";
 
-import form_flex from "./addExam_style";
-
 import TYT from "./answerForms/TYT_form";
 import AYT from "./answerForms/AYT_form";
 import YDS from "./answerForms/YDS_form";
-
 import { Link, useHistory } from "react-router-dom";
 import ResultComponent from "./Result";
 import moment from "moment";
@@ -27,9 +24,14 @@ import axios from "axios";
 export default function AddExam({ setDate }) {
   const { RangePicker } = DatePicker;
   const { Option } = Select;
-
   const [answer, setAnswer] = useState({});
   const [alert, setAlert] = useState("Lütfen Cevap Anahtarını Giriniz .");
+  const [result, setResult] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setStopTime] = useState("");
+  const [type, setType] = useState("Sınav Tipi");
+  const history = useHistory();
 
   const handleChange = (propertyName, index) => (e) => {
     const arr = answer;
@@ -41,18 +43,7 @@ export default function AddExam({ setDate }) {
     console.log({ ...answer });
   };
 
-  const [result, setResult] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setStopTime] = useState("");
-  const [type, setType] = useState("Sınav Tipi");
-  const history = useHistory();
-
   async function handleSubmit() {
-    // console.log("handleSubmit start", typeof startTime);
-    // console.log('handleSubmit start"', endTime);
-    // startTime.length == 0 && console.log("starttime");
     startTime.length == 0
       ? throwAlert()
       : await axios
@@ -78,16 +69,12 @@ export default function AddExam({ setDate }) {
   };
 
   function onChange(value, dateString) {
-    console.log("time is :", dateString);
-    let temp_dataString = moment(dateString);
-    let times;
-    // let times = temp_dataString;
-    // temp_dataString = temp_dataString.format("YYYY/MM/DD HH:mm:ss");
-    times = timeAdd(temp_dataString);
-    console.log("times", times);
-    times = times.format("YYYY/MM/DD HH:mm:ss");
-    setStartTime(temp_dataString.toLocaleString());
-    setStopTime(times.toLocaleString());
+    let startTime = moment(dateString).format("YYYY/MM/DD HH:mm:ss");
+    console.log("moment formatting  dateString:", startTime);
+    let stopTime = timeAdd(dateString);
+    console.log("timeAdd return val:", stopTime);
+    setStartTime(startTime.toLocaleString());
+    setStopTime(stopTime.toLocaleString());
   }
 
   function onOk(value) {
@@ -102,23 +89,12 @@ export default function AddExam({ setDate }) {
   function timeAdd(time) {
     let adding_time;
     if (type == "TYT") {
-      adding_time = time.add(135, "m");
+      adding_time = moment(time).add(135, "m").format("YYYY/MM/DD HH:mm:ss");
     } else if (type == "AYT") {
-      adding_time = time.add(180, "m");
+      adding_time = moment(time).add(180, "m").format("YYYY/MM/DD HH:mm:ss");
     } else {
-      adding_time = time.add(120, "m");
+      adding_time = moment(time).add(120, "m").format("YYYY/MM/DD HH:mm:ss");
     }
-    // switch (type) {
-    //   case "TYT":
-    //     return time.add(135, "m");
-    //     break;
-    //   case "AYT":
-    //     return time.add(180, "m");
-    //     break;
-    //   case "Dil":
-    //     return time.add(120, "m");
-    //     break;
-    // }
     return adding_time;
   }
 
