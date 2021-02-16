@@ -11,12 +11,9 @@ import {
   Empty,
 } from "antd";
 
-import form_flex from "./addExam_style";
-
 import TYT from "./answerForms/TYT_form";
 import AYT from "./answerForms/AYT_form";
 import YDS from "./answerForms/YDS_form";
-
 import { Link, useHistory } from "react-router-dom";
 import ResultComponent from "./Result";
 import moment from "moment";
@@ -25,11 +22,16 @@ import "antd/dist/antd.css";
 import axios from "axios";
 
 export default function AddExam({ setDate }) {
-  const { TextArea } = Input;
   const { RangePicker } = DatePicker;
   const { Option } = Select;
-
   const [answer, setAnswer] = useState({});
+  const [alert, setAlert] = useState("Lütfen Cevap Anahtarını Giriniz .");
+  const [result, setResult] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setStopTime] = useState("");
+  const [type, setType] = useState("Sınav Tipi");
+  const history = useHistory();
 
   const handleChange = (propertyName, index) => (e) => {
     const arr = answer;
@@ -41,41 +43,38 @@ export default function AddExam({ setDate }) {
     console.log({ ...answer });
   };
 
-  const [result, setResult] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setStopTime] = useState("");
-  const [type, setType] = useState("Sınav Tipi");
-  const history = useHistory();
-
   async function handleSubmit() {
-    await axios
-      .post("http://localhost:8099/exam/create", {
-        startTime: startTime,
-        endTime: endTime,
-        answerKey: answer,
-        type: type,
-      })
-      .then(function (response) {
-        console.log(response);
-        setResult(true);
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("İşlem Gerçekleştirilemedi.");
-      });
+    startTime.length == 0
+      ? throwAlert()
+      : await axios
+          .post("http://localhost:8099/exam/create", {
+            startTime: startTime,
+            endTime: endTime,
+            answerKey: answer,
+            type: type,
+          })
+          .then(function (response) {
+            console.log(response);
+            setResult(true);
+          })
+          .catch(function (error) {
+            console.log(error);
+            alert("İşlem Gerçekleştirilemedi.");
+          });
   }
 
+  const throwAlert = () => {
+    document.documentElement.scrollTop = 0;
+    setAlert("Lütfen tarih'i ayarlayınız .");
+  };
+
   function onChange(value, dateString) {
-    let temp_dataString = moment(dateString);
-    let times = temp_dataString;
-    temp_dataString = temp_dataString.format("YYYY/MM/DD HH:mm:ss");
-    times = timeAdd(times);
-    console.log("times", times);
-    times = times.format("YYYY/MM/DD HH:mm:ss");
-    setStartTime(temp_dataString.toLocaleString());
-    setStopTime(times.toLocaleString());
+    let startTime = moment(dateString).format("YYYY/MM/DD HH:mm:ss");
+    console.log("moment formatting  dateString:", startTime);
+    let stopTime = timeAdd(dateString);
+    console.log("timeAdd return val:", stopTime);
+    setStartTime(startTime.toLocaleString());
+    setStopTime(stopTime.toLocaleString());
   }
 
   function onOk(value) {
@@ -88,19 +87,15 @@ export default function AddExam({ setDate }) {
   }
 
   function timeAdd(time) {
-    let added_time;
-    switch (type) {
-      case "TYT":
-        added_time = time.add(135, "m");
-        return added_time;
-      case "AYT":
-        added_time = time.add(180, "m");
-        return added_time;
-
-      case "Dil":
-        added_time = time.add(120, "m");
-        return added_time;
+    let adding_time;
+    if (type == "TYT") {
+      adding_time = moment(time).add(135, "m").format("YYYY/MM/DD HH:mm:ss");
+    } else if (type == "AYT") {
+      adding_time = moment(time).add(180, "m").format("YYYY/MM/DD HH:mm:ss");
+    } else {
+      adding_time = moment(time).add(120, "m").format("YYYY/MM/DD HH:mm:ss");
     }
+    return adding_time;
   }
 
   const SelectBox = () => {
@@ -133,13 +128,13 @@ export default function AddExam({ setDate }) {
       case "TYT":
         return (
           <>
-            <div>
+            <div className={"d-flex align-items-center justify-content-center"}>
               <div
-                class="alert alert-danger"
+                className="alert alert-danger w-50 "
                 style={{ padding: "5px" }}
                 role="alert"
               >
-                Lütfen Cevap Anahtarını Giriniz .
+                <strong>{alert}</strong>
               </div>
             </div>
             <TYT handleChange={handleChange} />
@@ -157,13 +152,13 @@ export default function AddExam({ setDate }) {
       case "AYT":
         return (
           <>
-            <div>
+            <div className={"d-flex align-items-center justify-content-center"}>
               <div
-                class="alert alert-danger"
+                className="alert alert-danger w-50"
                 style={{ padding: "5px" }}
                 role="alert"
               >
-                Lütfen Cevap Anahtarını Giriniz .
+                <strong>{alert}</strong>
               </div>
             </div>
             <AYT handleChange={handleChange} />
@@ -181,13 +176,13 @@ export default function AddExam({ setDate }) {
       case "YDS":
         return (
           <>
-            <div>
+            <div className={"d-flex align-items-center justify-content-center"}>
               <div
-                class="alert alert-danger"
+                className="alert alert-danger w-50"
                 style={{ padding: "5px" }}
                 role="alert"
               >
-                Lütfen Cevap Anahtarını Giriniz .
+                <strong>{alert}</strong>
               </div>
             </div>
             <YDS handleChange={handleChange} />

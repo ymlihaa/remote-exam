@@ -86,7 +86,7 @@ const TYT_state = {
   cografya: [null, null, null, null, null],
   tarih: [null, null, null, null, null],
   felsefe: [null, null, null, null, null],
-  din: [null, null, null, null, null],
+  din: [null, null, null, null, null, null, null],
   fizik: [null, null, null, null, null, null, null],
   kimya: [null, null, null, null, null, null, null],
   biyo: [null, null, null, null, null, null],
