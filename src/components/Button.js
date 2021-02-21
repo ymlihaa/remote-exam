@@ -13,8 +13,10 @@ export default function RadioButtons(props) {
     setSelectedValue(event.target.value.toUpperCase());
     const node = event.target;
     const lessonName =
-      node.parentNode.parentNode.parentNode.parentNode.parentNode.className;
-    props.addclick(props.id, event.target.value, lessonName);
+      node.parentNode.parentNode.parentNode.parentNode.accessKey;
+    // node.parentNode.parentNode.parentNode.parentNode.parentNode.accessKey;
+    // props.addclick(props.id, event.target.value, lessonName);
+    console.log("lessonName:", lessonName);
   };
 
   return (

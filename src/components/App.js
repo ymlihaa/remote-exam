@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import Optik from "./Optik_comp/dev_optik";
+import Optik from "./Optik_comp/antTable";
 import ExamAlert from "./ExamAlert";
 import AppContext from "../context/app-context";
 import { useHistory } from "react-router-dom";
