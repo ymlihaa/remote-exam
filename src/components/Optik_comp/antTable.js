@@ -26,9 +26,9 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
 
   useEffect(() => {
     let localStore = JSON.parse(localStorage.getItem("resultArr"));
-    setResult(localStore);
+    localStore && setResult(localStore);
     travelJson();
-    console.log("dataSource:", dataSource);
+    // console.log("dataSource:", dataSource);
   }, []);
 
   // COMPONENT UPDATE
@@ -78,10 +78,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
         {
           key: i,
           element: (
-            <li accesskey={name}>
-              <span>
-                <strong>{i}-------</strong>
-              </span>
+            <li className="text-center" accesskey={name}>
               <span>{i + 1} . soru</span>
               <AnswerInput
                 id={i}
@@ -114,34 +111,22 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
         <>
           <ExamAlert alertType={alert} />
 
-          <div
-            className="card p-3 mb-5 bg-white rounded"
-            style={{ height: "100vh" }}
+          <>
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              size={"small"}
+              responsive={true}
+            />
+          </>
+          <button
+            onClick={finishExam}
+            type="button"
+            className="btn btn-danger w-50 align-self-center"
+            disabled={wait}
           >
-            <>
-              {/* {Object.keys(lessons).map((key) => {
-                return <div className={key}>{lessons[key]}</div>;
-              })} */}
-              <Table dataSource={dataSource} columns={columns} />
-            </>
-            <div
-              className="btn-group  d-flex 
-            justify-content-center
-            align-items-center
-            pt-3"
-              role="group"
-              aria-label="Basic example"
-            >
-              <button
-                onClick={finishExam}
-                type="button"
-                className="btn btn-danger  m-1"
-                disabled={wait}
-              >
-                Sınavı Bitir
-              </button>
-            </div>
-          </div>
+            Sınavı Bitir
+          </button>
         </>
       ) : (
         <Redirect

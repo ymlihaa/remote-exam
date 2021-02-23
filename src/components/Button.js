@@ -15,8 +15,10 @@ export default function RadioButtons(props) {
     const lessonName =
       node.parentNode.parentNode.parentNode.parentNode.accessKey;
     // node.parentNode.parentNode.parentNode.parentNode.parentNode.accessKey;
-    // props.addclick(props.id, event.target.value, lessonName);
+    props.addclick(props.id, node.value, lessonName);
     console.log("lessonName:", lessonName);
+    console.log("lessonName:", node.value);
+    console.log("lessonName:", props.id);
   };
 
   return (

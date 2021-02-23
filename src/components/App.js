@@ -115,7 +115,10 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ dispatch }}>
-      <div className="container d-flex flex-column align-items-center justify-content-center">
+      <div
+        className="container d-flex align-items-center  flex-column"
+        // style={{ height: "50vh" }}
+      >
         {element !== null && element}
 
         {state.isTrue ? <HandleOptik /> : <Join />}
