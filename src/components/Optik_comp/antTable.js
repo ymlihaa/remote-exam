@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, Route, useHistory } from "react-router-dom";
 import { Table } from "antd";
-
 import axios from "axios";
 import AnswerInput from "../Button";
 import ExamAlert from "../ExamAlert";
-import AYT from "../examTypeJson/AYT_info";
-import TYT from "../examTypeJson/TYT_info";
-import YDS from "../examTypeJson/YDS_info";
+import lessonName from "./lessonName";
 
 import { ChevronLeft } from "@material-ui/icons";
 
@@ -101,6 +98,14 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
   const travelJson = () => {
     Object.keys(result).map((key, index) => {
       console.log("boyu", [result[key].length]);
+      console.log("lesson_name:", lessonName[key]);
+      setData((dataSource) => [
+        ...dataSource,
+        {
+          key: key,
+          element: <h3 className="text-center">{lessonName[key]}</h3>,
+        },
+      ]);
       drawForm(key, result[key].length);
     });
   };
