@@ -6,8 +6,8 @@ import Radio from "@material-ui/core/Radio";
 import { Flag } from "@material-ui/icons";
 
 export default function RadioButtons({id,addclick,selectRadio,name}) {
-  const [selectedValue,setVal]=useState(selectRadio)
 
+  const [selectedValue,setVal]=useState(selectRadio)
 
   const handleChange = ({target:{value,id}}) =>{
     setVal(value.toUpperCase());

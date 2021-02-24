@@ -18,6 +18,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
   const [redirect, setRedirect] = useState(false);
   const [lessons, setLessons] = useState({});
   const history = useHistory();
+const [localData,setStore]=useState(); 
 
   // COMPONENT DİD MOUNT
 
@@ -25,14 +26,12 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
     let localStore = JSON.parse(localStorage.getItem("resultArr"));
     localStore && setResult(localStore);
     travelJson();
-    // console.log("dataSource:", dataSource);
   }, []);
 
   // COMPONENT UPDATE
 
   useEffect(() => {
     localStorage.setItem("resultArr", JSON.stringify(result));
-    // console.log("changed result : ", result);
   }, [result]);
 
   const addClick = (index, val, lessonName) => {
@@ -69,8 +68,9 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
   };
 
   const drawForm = (name, limit) => {
+    let localStore = JSON.parse(localStorage.getItem("resultArr"));
     for (let i = 0; i < limit; i++) {
-      let element_Key = name + i.toString()+'asdf';
+      let element_Key = name + i.toString()+'##2';
       setData((dataSource) => [
         ...dataSource,
         {
@@ -82,13 +82,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
                 id={i}
                 addclick={addClick}
                 name = {name}
-                selectRadio={
-                  result[name] == undefined ||
-                  result[name] == null ||
-                  result[name][i] == null
-                    ? ""
-                    : result[name][i]
-                }
+                selectRadio={localStore[name][i] }
               />
             </li>
           ),
@@ -101,7 +95,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
     Object.keys(result).map((key, index) => {
       console.log("boyu", [result[key].length]);
       console.log("lesson_name:", lessonName[key]);
-      let element_Key = key + index.toString() + "123123";
+      let element_Key = key + index.toString() + "##1";
       setData((dataSource) => [
         ...dataSource,
         {
