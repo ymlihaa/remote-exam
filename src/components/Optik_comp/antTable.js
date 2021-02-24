@@ -32,7 +32,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
 
   useEffect(() => {
     localStorage.setItem("resultArr", JSON.stringify(result));
-    console.log("changed result : ", result);
+    // console.log("changed result : ", result);
   }, [result]);
 
   const addClick = (index, val, lessonName) => {
@@ -41,7 +41,7 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
     if (temp[lessonName] == undefined) {
       temp[lessonName] = localStore && localStore[lessonName];
     }
-    temp[lessonName][index] = val.toUpperCase();
+    temp[lessonName][index] = val;
     setResult((result) => ({ ...result, [lessonName]: temp[lessonName] }));
   };
 
@@ -70,16 +70,18 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
 
   const drawForm = (name, limit) => {
     for (let i = 0; i < limit; i++) {
+      let element_Key = name + i.toString()+'asdf';
       setData((dataSource) => [
         ...dataSource,
         {
-          key: i,
+          key: element_Key,
           element: (
-            <li className="text-center" accesskey={name}>
+            <li key={element_Key + i} className="text-center" accessKey={name}>
               <span>{i + 1} . soru</span>
               <AnswerInput
                 id={i}
                 addclick={addClick}
+                name = {name}
                 selectRadio={
                   result[name] == undefined ||
                   result[name] == null ||
@@ -99,15 +101,35 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
     Object.keys(result).map((key, index) => {
       console.log("boyu", [result[key].length]);
       console.log("lesson_name:", lessonName[key]);
+      let element_Key = key + index.toString() + "123123";
       setData((dataSource) => [
         ...dataSource,
         {
-          key: key,
-          element: <h3 className="text-center">{lessonName[key]}</h3>,
+          key: element_Key,
+          element: (
+            <span
+              className="d-flex align-items-center justify-content-center "
+              style={{
+                fontWeight: "bold",
+                fontSize: "1.5em",
+              }}
+            >
+              {lessonName[key]}
+            </span>
+          ),
         },
       ]);
       drawForm(key, result[key].length);
     });
+  };
+
+  const card_Box = {
+    width:'100%',
+    height: "93vh",
+    overflowY: " scroll",
+    boxShadow: " rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
   };
 
   return (
@@ -116,18 +138,20 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
         <>
           <ExamAlert alertType={alert} />
 
-          <>
+          <div style={card_Box}>
             <Table
+              align="center"
               dataSource={dataSource}
               columns={columns}
-              size={"small"}
+              pagination={false}
               responsive={true}
+              size={"large"}
             />
-          </>
+          </div>
           <button
             onClick={finishExam}
             type="button"
-            className="btn btn-danger w-50 align-self-center"
+            className="btn btn-danger w-25 align-self-center m-3"
             disabled={wait}
           >
             Sınavı Bitir

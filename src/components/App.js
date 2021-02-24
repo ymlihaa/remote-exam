@@ -116,7 +116,7 @@ export default function App() {
   return (
     <AppContext.Provider value={{ dispatch }}>
       <div
-        className="container d-flex align-items-center  flex-column"
+        className="container d-flex align-items-center  flex-column p-1"
         // style={{ height: "50vh" }}
       >
         {element !== null && element}
