@@ -18,13 +18,13 @@ export default function Dev_Optik({ setAlertType, User, stateOptik, lesson }) {
   const [redirect, setRedirect] = useState(false);
   const [lessons, setLessons] = useState({});
   const history = useHistory();
-const [localData,setStore]=useState(); 
+// const [localData,setStore]=useState();
 
   // COMPONENT DİD MOUNT
 
   useEffect(() => {
     let localStore = JSON.parse(localStorage.getItem("resultArr"));
-    localStore && setResult(localStore);
+    localStore ? setResult(localStore) : localStorage.setItem('resultArr',JSON.stringify(stateOptik));
     travelJson();
   }, []);
 
@@ -68,7 +68,7 @@ const [localData,setStore]=useState();
   };
 
   const drawForm = (name, limit) => {
-    let localStore = JSON.parse(localStorage.getItem("resultArr"));
+    let localData = JSON.parse(localStorage.getItem('resultArr'));
     for (let i = 0; i < limit; i++) {
       let element_Key = name + i.toString()+'##2';
       setData((dataSource) => [
@@ -82,7 +82,7 @@ const [localData,setStore]=useState();
                 id={i}
                 addclick={addClick}
                 name = {name}
-                selectRadio={localStore[name][i] }
+                selectRadio={localData[name][i] }
               />
             </li>
           ),
@@ -161,4 +161,4 @@ const [localData,setStore]=useState();
     </>
   );
 }
-// TODO:ekrana bas
+
