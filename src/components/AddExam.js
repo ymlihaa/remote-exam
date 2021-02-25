@@ -31,7 +31,9 @@ export default function AddExam({ setDate }) {
   const [startTime, setStartTime] = useState("");
   const [endTime, setStopTime] = useState("");
   const [type, setType] = useState("Sınav Tipi");
+  const [examNo,setExam]=useState('');
   const history = useHistory();
+
 
   const handleChange = (propertyName, index) => (e) => {
     const arr = answer;
@@ -55,11 +57,13 @@ export default function AddExam({ setDate }) {
           })
           .then(function (response) {
             console.log(response);
+             setExam(response.data);
             setResult(true);
+
           })
           .catch(function (error) {
             console.log(error);
-            alert("İşlem Gerçekleştirilemedi.");
+            // alert("İşlem Gerçekleştirilemedi.");
           });
   }
 
@@ -217,7 +221,7 @@ export default function AddExam({ setDate }) {
           </div>
         </>
       ) : (
-        <ResultComponent message={"Sınavınız başarıyla kaydedildi ."} />
+        <ResultComponent examID ={examNo} message={"Sınavınız başarıyla kaydedildi ."} />
       )}
     </div>
   );
