@@ -1,3 +1,9 @@
+# Projenin demosuna buradan : http://remote-exam-client.herokuapp.com/ ulaşabilirsiniz . 
+### Sisteme giriş yapabilmek için teacher login bilgileri ;
+### Kullanıcı Adı : test@gmail.com
+### password : 123456
+
+
 ## Available Scripts
 
 In the project directory, you can run:
